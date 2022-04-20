@@ -59,6 +59,8 @@ module lab62 (
 
 
 logic Reset_h, vssig, blank, sync, VGA_Clk;
+logic nextStateSig;
+logic [1:0] currState, currTank;
 
 
 //=======================================================
@@ -115,6 +117,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	
 	//Assign one button to reset
 	assign {Reset_h}=~ (KEY[0]);
+	assign nextState = ~(KEY[1]);
 
 	//Our A/D converter is only 12 bit
 	assign VGA_R = Red[7:4];
@@ -164,8 +167,20 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 
 
-	bullet bull(.frame_clk(VGA_VS), .Reset(Reset_h), .BallX(ballxsig), .BallY(ballysig), .shoot(shootsig), .Direction(dirsig), .transparent(transig), .BulletX(bulletxsig), .BulletY(bulletysig));
 
+	state_controller sc(.Reset(Reset_h), .Clk(VGA_VS), .nextStateSig(nextState), .currentState(currState));
+
+	tank_selector ts (.Clk(VGA_VS), .Reset(Reset_h), .keycode(keycode), .currentState(currState), .currentTank(currTank));
+	
+	
+	bullet bull(.frame_clk(VGA_VS), .Reset(Reset_h), 
+					.BallX(ballxsig), .BallY(ballysig), 
+					.shoot(shootsig), .Direction(dirsig), .transparent(transig), 
+					.BulletX(bulletxsig), .BulletY(bulletysig));
+
+					
+					
+					
 	ball b(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), .BallX(ballxsig), .BallY(ballysig), .BallS(ballsizesig), .Direction(dirsig), .shoot(shootsig));
 					
 	vga_controller v(.Clk(MAX10_CLK1_50),       // 50 MHz clock
@@ -179,7 +194,9 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 													.DrawX(drawxsig),     // horizontal coordinate
 								              .DrawY(drawysig) );   // vertical coordinate
 
-	color_mapper c(.BallX(ballxsig), .BallY(ballysig), .BulletX(bulletxsig), .BulletY(bulletysig), .DrawX(drawxsig), .DrawY(drawysig), .Ball_size(ballsizesig), .transparent(transig),  .Red(Red), .Green(Green), .Blue(Blue) );
+	color_mapper c(.BallX(ballxsig), .BallY(ballysig), .BulletX(bulletxsig), .BulletY(bulletysig), .DrawX(drawxsig), .DrawY(drawysig), .Ball_size(ballsizesig), .transparent(transig), 
+						.currentState(currState), .currentTank(currTank), 
+						.Red(Red), .Green(Green), .Blue(Blue) );
 							  
 
 

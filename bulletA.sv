@@ -8,6 +8,7 @@ module bullet(input frame_clk, Reset,
 					
 					
 	logic [9:0] Bullet_X_Pos, Bullet_X_Motion, Bullet_Y_Pos, Bullet_Y_Motion;
+	logic isCarry;
 
 	parameter [9:0] Bullet_X_Center=320;  // Center position on the X axis
    parameter [9:0] Bullet_Y_Center=240;  // Center position on the Y axis
@@ -15,8 +16,8 @@ module bullet(input frame_clk, Reset,
    parameter [9:0] Bullet_X_Max=639;     // Rightmost point on the X axis
    parameter [9:0] Bullet_Y_Min=0;       // Topmost point on the Y axis
    parameter [9:0] Bullet_Y_Max=479;     // Bottommost point on the Y axis
-   parameter [9:0] Bullet_X_Step=1;      // Step size on the X axis
-   parameter [9:0] Bullet_Y_Step=1;      // Step size on the Y axis	
+   parameter [9:0] Bullet_X_Step=5;      // Step size on the X axis
+   parameter [9:0] Bullet_Y_Step=5;      // Step size on the Y axis	
 	parameter [2:0] Bullet_Size = 3;
 
 	always_ff @ (posedge Reset or posedge frame_clk )
@@ -25,9 +26,10 @@ module bullet(input frame_clk, Reset,
         begin 
             Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
 				Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
-				Bullet_X_Pos <= Bullet_Y_Center;
-				Bullet_Y_Pos <= Bullet_X_Center;
+				Bullet_X_Pos <= BallY;
+				Bullet_Y_Pos <= BallX;
 				transparent <= 1'b0;
+				isCarry <= 1'b1;
         end
            
         else 
@@ -36,24 +38,28 @@ module bullet(input frame_clk, Reset,
 					  Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
 					  Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
 					  transparent <= 1'b0;
+					  isCarry <= 1'b1;
 				 end
 					
 				 else if ( (Bullet_Y_Pos - Bullet_Size) <= Bullet_Y_Min )begin  // Ball is at the top edge, BOUNCE!
 					  Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
 					  Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
 					  transparent <= 1'b0;
+					  isCarry <= 1'b1;
 				 end
 				 
 				  else if ( (Bullet_X_Pos + Bullet_Size) >= Bullet_X_Max ) begin // Ball is at the Right edge, BOUNCE!
 					 Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
 					  Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
 					  transparent <= 1'b0;  // 2's complement.
+					  isCarry <= 1'b1;
 					end
 					
 				 else if ( (Bullet_X_Pos - Bullet_Size) <= Bullet_X_Min ) begin  // Ball is at the Left edge, BOUNCE!
 					  Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
 					  Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
 					  transparent <= 1'b0;
+					  isCarry <= 1'b1;
 					  
 				 end
 				 
@@ -61,6 +67,7 @@ module bullet(input frame_clk, Reset,
 					  
 				 else if (shoot == 1) begin
 						transparent <= 1'b0;
+						isCarry <= 1'b0;
 				 
 						 case (Direction)
 							2'b00 : begin
@@ -98,12 +105,20 @@ module bullet(input frame_clk, Reset,
 				 
 				 end
 				 
+				 if (isCarry == 1) begin
+					Bullet_Y_Pos <= BallY;  // Update ball position
+					Bullet_X_Pos <= BallX;
+				 
+				 end
+				 else begin
+					 Bullet_Y_Pos <= (Bullet_Y_Pos + Bullet_Y_Motion);  // Update ball position
+					Bullet_X_Pos <= (Bullet_X_Pos + Bullet_X_Motion);
+				 end
 				 
 				 
 				 
 				 
-				 Bullet_Y_Pos <= (Bullet_Y_Pos + Bullet_Y_Motion);  // Update ball position
-				 Bullet_X_Pos <= (Bullet_X_Pos + Bullet_X_Motion);
+				
 			
 			
 	  /**************************************************************************************

@@ -354,3 +354,39 @@ Info: Building ../tankStars_bsp/
 C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
 [BSP build complete]
 [tankStars build complete]
+14:10:15 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+14:18:53 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+14:23:06 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+15:25:50 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+16:32:25 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+16:40:44 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]

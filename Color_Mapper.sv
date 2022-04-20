@@ -15,9 +15,10 @@
 
 module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX, DrawY, Ball_size,
 							  input			transparent,
+							  input 			[1:0] currentState, currentTank,
 							  output logic [7:0]  Red, Green, Blue );
     
-    logic ball_on, bullet_on;
+    logic ball_on, bullet_on, select_on;
 	 logic [7:0] currData;
 	 
  /* Old Ball: Generated square box by checking if the current pixel is within a square of length
@@ -43,11 +44,34 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
 	 assign Bullet_DistX = DrawX - BulletX;
     assign Bullet_DistY = DrawY - BulletY;
     assign Size = 4;
+	 
+	 
+	 
+	 //state 0: select display
+	 parameter [9:0] Select_X_Center=320;  // Center position on the X axis
+    parameter [9:0] Select_Y_Center=240; 
+	 int DistX_S, DistY_S;
+	 assign DistX_s = DrawX - Select_X_Center;
+    assign DistY_s = DrawY - Select_Y_Center;
+	 
+	 
+	 
+	 always_comb
+    begin:select_on_proc
+        if ( (DistX <= 8) & (DistY <= 16) & (DistX >= 0) & (DistY >= 0)  ) 
+            select_on = 1'b1;
+        else 
+            select_on = 1'b0;
+     end 
+	 
+	 
 	  
-	 font_rom fr(.addr(DistY + 17),
+	 font_rom fr(.addr(DistY + (currentTank+2) * 17),
 					.data(currData)
 						 );	 
-	  
+	 
+	
+		
 	  
     always_comb
     begin:Ball_on_proc
@@ -70,37 +94,97 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
 		 
     always_comb
     begin:RGB_Display
-        if ((ball_on == 1'b1)) begin 
-				if(currData[DistX] == 1'b1)begin
-					Red = 8'hff;
-					Green = 8'h55;
-					Blue = 8'h00;
+	 
+		case (currentState)
+			
+			2'b00	:	begin //selection
+				if (select_on) begin
 				
-				end
-				else begin
-					Red = 8'h00;
-					Green = 8'h55;
-					Blue = 8'h00;
-				
-				end			
-					
-			end 
-		  
-		  else begin
-				if ((bullet_on == 1'b1)) begin 
+					if(currData[DistX] == 1'b1)begin
 						Red = 8'hff;
 						Green = 8'h55;
 						Blue = 8'h00;
-				end  
-						
-				else begin				
-						Red = 8'h00; 
-						Green = 8'h00;
-						Blue = 8'h7f - DrawX[9:3];
+					
+					end
+					else begin
+						Red = 8'h00;
+						Green = 8'h55;
+						Blue = 8'h00;
+					
+					end
+				
+				
 				end
-		  
-		            
-			end 
+				else begin
+					Red = 8'h00; 
+					Green = 8'h7f - DrawX[9:3];
+					Blue = 8'h00;
+				
+				end
+			
+			
+			
+				
+			
+			end
+			
+			2'b01 : begin //fight
+			
+				if ((ball_on == 1'b1)) begin 
+					if(currData[DistX] == 1'b1)begin
+						Red = 8'hff;
+						Green = 8'h55;
+						Blue = 8'h00;
+					
+					end
+					else begin
+						Red = 8'h00;
+						Green = 8'h55;
+						Blue = 8'h00;
+					
+					end			
+						
+			  end 
+			  
+			  else begin
+					if ((bullet_on == 1'b1)) begin 
+							Red = 8'hff;
+							Green = 8'h55;
+							Blue = 8'h00;
+					end  
+							
+					else begin				
+							Red = 8'h00; 
+							Green = 8'h00;
+							Blue = 8'h7f - DrawX[9:3];
+					end
+			  
+							
+			  end 
+			
+			
+			end
+			
+			
+			default	: begin //over
+				Red = 8'h7f - DrawX[9:3];
+				Green = 8'h00;
+				Blue = 8'h00;
+			
+			
+			end
+			
+			
+		
+		
+		
+		endcase
+	 
+	 
+	 
+	 
+	 
+			  
     
 	 end
 	 

@@ -2,8 +2,8 @@
 <sch:Settings xmlns:sch="http://www.altera.com/embeddedsw/bsp/schema">
         <BspType>hal</BspType>
         <BspVersion>default</BspVersion>
-        <BspGeneratedTimeStamp>2022-4-20 0:44:26</BspGeneratedTimeStamp>
-        <BspGeneratedUnixTimeStamp>1650433466164</BspGeneratedUnixTimeStamp>
+        <BspGeneratedTimeStamp>2022-4-20 14:18:30</BspGeneratedTimeStamp>
+        <BspGeneratedUnixTimeStamp>1650482310427</BspGeneratedUnixTimeStamp>
         <BspGeneratedLocation>D:\UIUC\ECE385_tempworkspace\finalProject\software\tankStars_bsp</BspGeneratedLocation>
         <BspSettingsFile>settings.bsp</BspSettingsFile>
         <SopcDesignFile>..\..\lab62_soc.sopcinfo</SopcDesignFile>
