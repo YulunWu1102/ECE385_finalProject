@@ -1,0 +1,5 @@
+module palette(input[3:0] colorIdx,
+					output[23:0] rgbVal);
+
+
+endmodule
