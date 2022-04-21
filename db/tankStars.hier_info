@@ -85167,26 +85167,25 @@ rgbVal[23] <= Mux0.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |lab62|color_mapper:c|rtank_rom:rtk
-addr[0] => Decoder0.IN15
-addr[1] => Decoder0.IN14
-addr[2] => Decoder0.IN13
-addr[3] => Decoder0.IN12
-addr[4] => Decoder0.IN11
-addr[5] => Decoder0.IN10
-addr[6] => Decoder0.IN9
-addr[7] => Decoder0.IN8
-addr[8] => Decoder0.IN7
-addr[9] => Decoder0.IN6
-addr[10] => Decoder0.IN5
-addr[11] => Decoder0.IN4
-addr[12] => Decoder0.IN3
-addr[13] => Decoder0.IN2
-addr[14] => Decoder0.IN1
-addr[15] => Decoder0.IN0
-data[0] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
-data[1] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
-data[2] <= <GND>
-data[3] <= Decoder0.DB_MAX_OUTPUT_PORT_TYPE
+addr[0] => Decoder0.IN10
+addr[1] => Decoder0.IN9
+addr[2] => Decoder0.IN8
+addr[3] => Decoder0.IN7
+addr[4] => Decoder0.IN6
+addr[5] => Decoder0.IN5
+addr[6] => Decoder0.IN4
+addr[7] => Decoder0.IN3
+addr[8] => Decoder0.IN2
+addr[9] => Decoder0.IN1
+addr[10] => Decoder0.IN0
+data[0] <= WideOr7.DB_MAX_OUTPUT_PORT_TYPE
+data[1] <= WideOr6.DB_MAX_OUTPUT_PORT_TYPE
+data[2] <= WideOr5.DB_MAX_OUTPUT_PORT_TYPE
+data[3] <= WideOr4.DB_MAX_OUTPUT_PORT_TYPE
+data[4] <= WideOr3.DB_MAX_OUTPUT_PORT_TYPE
+data[5] <= WideOr2.DB_MAX_OUTPUT_PORT_TYPE
+data[6] <= WideOr1.DB_MAX_OUTPUT_PORT_TYPE
+data[7] <= WideOr0.DB_MAX_OUTPUT_PORT_TYPE
 
 
 |lab62|color_mapper:c|palette:plt_3
