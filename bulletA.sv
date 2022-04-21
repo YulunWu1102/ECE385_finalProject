@@ -8,6 +8,8 @@ module bullet(input frame_clk, Reset,
 					
 					
 	logic [9:0] Bullet_X_Pos, Bullet_X_Motion, Bullet_Y_Pos, Bullet_Y_Motion;
+	logic [9:0] Clk_counter;
+	logic [3:0] Bullet_Y_Change;
 	logic isCarry;
 
 	parameter [9:0] Bullet_X_Center=320;  // Center position on the X axis
@@ -24,16 +26,24 @@ module bullet(input frame_clk, Reset,
     begin: Move_Bullet
         if (Reset)  // Asynchronous Reset
         begin 
-            Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
-				Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
-				Bullet_X_Pos <= BallY;
-				Bullet_Y_Pos <= BallX;
-				transparent <= 1'b0;
-				isCarry <= 1'b1;
+            	Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
+		Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
+		Bullet_X_Pos <= BallY;
+		Bullet_Y_Pos <= BallX;
+		transparent <= 1'b0;
+		isCarry <= 1'b1;
+		Clk_counter <= 10'd0;
         end
            
         else 
         begin 
+				
+				if (Clk_counter > 1000) begin
+					Clk_counter <= 0;
+				end
+				else begin
+					Clk_counter <= Clk_counter + 1'b1;
+				end
 				 if ( (Bullet_Y_Pos + Bullet_Size) >= Bullet_Y_Max )begin  // Ball is at the bottom edge, BOUNCE!
 					  Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
 					  Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
@@ -68,31 +78,48 @@ module bullet(input frame_clk, Reset,
 				 else if (shoot == 1) begin
 						transparent <= 1'b0;
 						isCarry <= 1'b0;
-				 
+						Bullet_Y_Change <= 0;
+						
 						 case (Direction)
 							2'b00 : begin
 										Bullet_X_Motion <= -1;//A
-										Bullet_Y_Motion<= 0;
+										//Bullet_Y_Change <= 8;
+										if (Clk_counter % 20 == 0)begin
+				 							Bullet_Y_Change <= (Bullet_Y_Change - 2'd1);
+										end
+										Bullet_Y_Motion <= Bullet_Y_Change ;
 																	
 										
 									  end
 							2'b01 : begin
-										Bullet_X_Motion <= 1;//A
-										Bullet_Y_Motion<= 0;
+										Bullet_X_Motion <= 2;//A
+										//Bullet_Y_Change <= 8;
+										if (Clk_counter % 20 == 0)begin
+				 							Bullet_Y_Change <= (Bullet_Y_Change - 2'd1);
+										end
+										Bullet_Y_Motion <= Bullet_Y_Change ;
 																	
 										
 									  end
 							
 							2'b10 : begin
 										Bullet_X_Motion <= 0;//A
-										Bullet_Y_Motion<= 1;
+										//Bullet_Y_Change <= 8;
+										if (Clk_counter % 20 == 0)begin
+				 							Bullet_Y_Change <= (Bullet_Y_Change - 2'd1);
+										end
+										Bullet_Y_Motion <= Bullet_Y_Change ;
 																	
 										
 									  end
 							
 							2'b11 : begin
 										Bullet_X_Motion <= 0;//A
-										Bullet_Y_Motion<= -1;
+										//Bullet_Y_Change <= 8;
+										if (Clk_counter % 20 == 0)begin
+				 							Bullet_Y_Change <= (Bullet_Y_Change - 2'd1);
+										end
+										Bullet_Y_Motion <= Bullet_Y_Change ;
 																	
 										
 									  end

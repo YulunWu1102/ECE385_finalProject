@@ -21,19 +21,17 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
     logic ball_on, bullet_on, select_on;
 	 logic [7:0] currData;
 	 
- /* Old Ball: Generated square box by checking if the current pixel is within a square of length
-    2*Ball_Size, centered at (BallX, BallY).  Note that this requires unsigned comparisons.
 	 
-    if ((DrawX >= BallX - Ball_size) &&
-       (DrawX <= BallX + Ball_size) &&
-       (DrawY >= BallY - Ball_size) &&
-       (DrawY <= BallY + Ball_size))
+	 
+	 //test palette
+	 logic [23:0] color_1;
+	 logic [23:0] color_2;
+	 
+	 
+	 palette plt_1 (.colorIdx(9), .rgbVal(color_1));
+	 palette plt_2 (.colorIdx(10), .rgbVal(color_2));
+	 
 
-     New Ball: Generates (pixelated) circle by using the standard circle formula.  Note that while 
-     this single line is quite powerful descriptively, it causes the synthesis tool to use up three
-     of the 12 available multipliers on the chip!  Since the multiplicants are required to be signed,
-	  we have to first cast them from logic to int (signed by default) before they are multiplied). */
-	  
     int DistX, DistY;
 	 assign DistX = DrawX - BallX;
     assign DistY = DrawY - BallY;
@@ -58,24 +56,46 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
 	 
 	 always_comb
     begin:select_on_proc
-        if ( (DistX <= 8) & (DistY <= 16) & (DistX >= 0) & (DistY >= 0)  ) 
+        if ( (DistX <= 70) & (DistY <= 50) & (DistX >= 0) & (DistY >= 0)  ) 
             select_on = 1'b1;
         else 
             select_on = 1'b0;
      end 
+	  
+	  
+	 int TankX, TankY;
+	 
+//	 always_comb
+//    begin: adjust_coor
+//        if ( (DistX <= 70) & (DistY <= 50) & (DistX >= 0) & (DistY >= 0)  ) begin
+//            TankX = DistX;
+//				TankY = DistY;
+//		  end
+//		  
+//        else begin
+//            TankX = 0;
+//				TankY = 0;
+//		  end
+//    end 
 	 
 	 
 	  
-	 font_rom fr(.addr(DistY + (currentTank+2) * 17),
-					.data(currData)
-						 );	 
-	 
-	
-		
+//	 font_rom fr(.addr(DistY + (currentTank+2) * 17),
+//					.data(currData)
+//						 );	 
+//	 
+	//test palette on tank
+	logic [15:0] currentADDR;
+	assign currentADDR = (DistY * 70) + DistX;
+	logic [3:0] colorIdx;
+	rtank_rom rtk( .addr(1582), .data(colorIdx));
+	logic [23:0] color_rtk;
+	palette plt_3(.colorIdx(colorIdx), .rgbVal(color_rtk));
+
 	  
     always_comb
     begin:Ball_on_proc
-        if ( (DistX <= 8) & (DistY <= 16) & (DistX >= 0) & (DistY >= 0)  ) 
+        if ( (DistX <= 70) & (DistY <= 50) & (DistX >= 0) & (DistY >= 0)  ) 
             ball_on = 1'b1;
         else 
             ball_on = 1'b0;
@@ -91,66 +111,56 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
        
 		 
 		 
-		 
-    always_comb
+	always_comb
     begin:RGB_Display
 	 
-		case (currentState)
+//		case (currentState)
+//			
+//			2'b00	:	begin //selection
+//				if (select_on) begin
+//				
+//					if(currData[DistX] == 1'b1)begin
+//						Red = color_1[23:16];
+//						Green = color_1[15:8];
+//						Blue = color_1[7:0];
+//					
+//					end
+//					else begin
+//						Red = 8'h00;
+//						Green = 8'h55;
+//						Blue = 8'h00;
+//					
+//					end
+//				
+//				
+//				end
+//				else begin
+//					Red = 8'h00; 
+//					Green = 8'h7f - DrawX[9:3];
+//					Blue = 8'h00;
+//				
+//				end
+//			
+//			
+//			
+//				
+//			
+//			end
+//			
+//			2'b01 : begin //fight color_rtk
 			
-			2'b00	:	begin //selection
-				if (select_on) begin
-				
-					if(currData[DistX] == 1'b1)begin
-						Red = 8'hff;
-						Green = 8'h55;
-						Blue = 8'h00;
-					
-					end
-					else begin
-						Red = 8'h00;
-						Green = 8'h55;
-						Blue = 8'h00;
-					
-					end
-				
-				
-				end
-				else begin
-					Red = 8'h00; 
-					Green = 8'h7f - DrawX[9:3];
-					Blue = 8'h00;
-				
-				end
-			
-			
-			
-				
-			
-			end
-			
-			2'b01 : begin //fight
-			
-				if ((ball_on == 1'b1)) begin 
-					if(currData[DistX] == 1'b1)begin
-						Red = 8'hff;
-						Green = 8'h55;
-						Blue = 8'h00;
-					
-					end
-					else begin
-						Red = 8'h00;
-						Green = 8'h55;
-						Blue = 8'h00;
-					
-					end			
+			 if ((ball_on == 1'b1)) begin 
+					Red = color_rtk[23:16];
+					Green = color_rtk[15:8];
+					Blue = color_rtk[7:0];	
 						
 			  end 
 			  
 			  else begin
 					if ((bullet_on == 1'b1)) begin 
-							Red = 8'hff;
-							Green = 8'h55;
-							Blue = 8'h00;
+							Red = color_2[23:16];
+							Green = color_2[15:8];
+							Blue = color_2[7:0];
 					end  
 							
 					else begin				
@@ -166,28 +176,25 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
 			end
 			
 			
-			default	: begin //over
-				Red = 8'h7f - DrawX[9:3];
-				Green = 8'h00;
-				Blue = 8'h00;
-			
-			
-			end
-			
-			
-		
-		
-		
-		endcase
+//			default	: begin //over
+//				Red = 8'h7f - DrawX[9:3];
+//				Green = 8'h00;
+//				Blue = 8'h00;
+//			
+//			
+//			end
+//			
+//			
+//		
+//		
+//		
+//		endcase
 	 
 	 
 	 
 	 
 	 
-			  
-    
-	 end
-	 
+
 	   
 	 
 	 
