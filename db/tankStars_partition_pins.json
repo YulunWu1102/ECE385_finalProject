@@ -280,6 +280,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "VGA_R[2]",
+					"strict" : false
+				},
+				{
 					"name" : "VGA_R[3]",
 					"strict" : false
 				},

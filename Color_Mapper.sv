@@ -22,22 +22,14 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
 	 logic [7:0] currData;
 	 
 	 
-	 
-	 //test palette
-	 logic [23:0] color_1;
-	 logic [23:0] color_2;
-	 
-	 
-	 palette plt_1 (.colorIdx(9), .rgbVal(color_1));
-	 palette plt_2 (.colorIdx(10), .rgbVal(color_2));
-	 
-
+		
+	 //-----------------calculate co-ord to tank-----------------
     int DistX, DistY;
 	 assign DistX = DrawX - BallX;
     assign DistY = DrawY - BallY;
     
 	 
-	 //bullet-----------------
+	 //-----------------calculate co-ord to bullet-----------------
 	 int Bullet_DistX, Bullet_DistY, Size;
 	 assign Bullet_DistX = DrawX - BulletX;
     assign Bullet_DistY = DrawY - BulletY;
@@ -84,14 +76,28 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
 //					.data(currData)
 //						 );	 
 //	 
-	//test palette on tank
-	logic [15:0] currentADDR;
-	assign currentADDR = (DistY * 70) + DistX;
-	logic [3:0] colorIdx;
-	rtank_rom rtk( .addr(1582), .data(colorIdx));
-	logic [23:0] color_rtk;
-	palette plt_3(.colorIdx(colorIdx), .rgbVal(color_rtk));
+	//-----------------palette on tank_0 -----------------
+	logic [15:0] currentTankADDR;
+	assign currentTankADDR = (DistY * 70) + DistX;	
+	logic [3:0] colorIdx_tank;
+	//assign colorIdx = 4'h3;
+	rtank_rom rtk( .addr(currentTankADDR), .tankSelection(1), .data(colorIdx_tank));
+	logic [23:0] color_tank_0;
+	palette plt_tank_0(.colorIdx(colorIdx_tank), .rgbVal(color_tank_0));
 
+	
+	//-----------------palette on background -----------------
+	logic [18:0] currentBackgroundADDR;
+	assign currentBackgroundADDR = (DrawY * 640) + DrawX;	
+	logic [3:0] colorIdx_background;
+	//assign colorIdx = 4'h3;
+	background_rom bgd( .addr(currentBackgroundADDR), .data(colorIdx_background));
+	logic [23:0] color_background;
+	palette plt_background_1(.colorIdx(colorIdx_background), .rgbVal(color_background));
+
+	
+	
+	
 	  
     always_comb
     begin:Ball_on_proc
@@ -150,23 +156,23 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
 //			2'b01 : begin //fight color_rtk
 			
 			 if ((ball_on == 1'b1)) begin 
-					Red = color_rtk[23:16];
-					Green = color_rtk[15:8];
-					Blue = color_rtk[7:0];	
+					Red = color_tank_0[23:16];
+					Green = color_tank_0[15:8];
+					Blue = color_tank_0[7:0];	
 						
 			  end 
 			  
 			  else begin
 					if ((bullet_on == 1'b1)) begin 
-							Red = color_2[23:16];
-							Green = color_2[15:8];
-							Blue = color_2[7:0];
+							Red = 8'hff;
+							Green = 8'h00;
+							Blue = 8'hff;
 					end  
 							
 					else begin				
-							Red = 8'h00; 
-							Green = 8'h00;
-							Blue = 8'h7f - DrawX[9:3];
+							Red = color_background[23:16]; 
+							Green = color_background[15:8];
+							Blue = color_background[7:0];
 					end
 			  
 							

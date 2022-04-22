@@ -330,3 +330,167 @@ javax.net.ssl.SSLHandshakeException: Received fatal alert: handshake_failure
 
 !ENTRY com.altera.sbtgui.launch 1 0 2022-04-20 23:24:56.238
 !MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+!SESSION 2022-04-21 23:56:46.746 -----------------------------------------------
+eclipse.buildId=4.5.2.M20160212-1500
+java.version=1.8.0_05
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=zh_CN
+Framework arguments:  -product org.eclipse.epp.package.cpp.product -pluginCustomization C:/intelfpga_lite/18.1/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product -pluginCustomization C:/intelfpga_lite/18.1/nios2eds/bin/eclipse_nios2/plugin_customization.ini
+
+!ENTRY org.eclipse.epp.logging.aeri.ide 2 16 2022-04-21 23:57:12.535
+!MESSAGE Server ‘org.eclipse.epp.logging.aeri.ide.server’ failed with exception: Received fatal alert: handshake_failure. ; version: 1.100.0.v20160217-0435
+!STACK 0
+javax.net.ssl.SSLHandshakeException: Received fatal alert: handshake_failure
+	at sun.security.ssl.Alerts.getSSLException(Unknown Source)
+	at sun.security.ssl.Alerts.getSSLException(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.recvAlert(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.readRecord(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.performInitialHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at sun.security.ssl.SSLSocketImpl.startHandshake(Unknown Source)
+	at org.apache.http.conn.ssl.SSLConnectionSocketFactory.createLayeredSocket(SSLConnectionSocketFactory.java:290)
+	at org.apache.http.conn.ssl.SSLConnectionSocketFactory.connectSocket(SSLConnectionSocketFactory.java:259)
+	at org.apache.http.impl.conn.HttpClientConnectionOperator.connect(HttpClientConnectionOperator.java:125)
+	at org.apache.http.impl.conn.PoolingHttpClientConnectionManager.connect(PoolingHttpClientConnectionManager.java:319)
+	at org.apache.http.impl.execchain.MainClientExec.establishRoute(MainClientExec.java:363)
+	at org.apache.http.impl.execchain.MainClientExec.execute(MainClientExec.java:219)
+	at org.apache.http.impl.execchain.ProtocolExec.execute(ProtocolExec.java:195)
+	at org.apache.http.impl.execchain.RetryExec.execute(RetryExec.java:86)
+	at org.apache.http.impl.execchain.RedirectExec.execute(RedirectExec.java:108)
+	at org.apache.http.impl.client.InternalHttpClient.doExecute(InternalHttpClient.java:184)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:82)
+	at org.apache.http.impl.client.CloseableHttpClient.execute(CloseableHttpClient.java:57)
+	at org.apache.http.client.fluent.Executor.execute(Executor.java:206)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.request(IO.java:205)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.IO.refreshConfiguration(IO.java:68)
+	at org.eclipse.epp.internal.logging.aeri.ide.server.mars.ServerConnection.startUp(ServerConnection.java:101)
+	at com.google.common.util.concurrent.AbstractIdleService$2$1.run(AbstractIdleService.java:54)
+	at com.google.common.util.concurrent.Callables$3.run(Callables.java:93)
+	at java.lang.Thread.run(Unknown Source)
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-21 23:57:54.949
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-21 23:57:57.892
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:06:53.134
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:06:55.916
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:14:14.356
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:14:17.058
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:23:13.110
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:23:16.276
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:29:34.217
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:29:36.899
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:36:54.849
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:36:57.656
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:39:59.562
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:40:02.137
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:45:15.121
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:45:17.980
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:54:06.603
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 00:54:09.173
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:01:40.081
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:01:42.769
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:08:03.030
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:08:05.831
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:14:16.150
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:14:18.882
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:21:42.917
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:21:45.894
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:25:21.375
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:25:24.017
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:31:12.439
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:31:15.164
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:36:00.662
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:36:03.478
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:37:42.265
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:37:45.180
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:43:21.838
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:43:24.536
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:47:15.706
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:47:18.659
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:53:44.366
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 01:53:47.499
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 02:08:17.114
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --stop --sidp=0x1e8 --id=0x0 --timestamp=1650429749]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-22 02:08:20.317
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=' --device=1 --instance=0 --go --sidp=0x1e8 --id=0x0 --timestamp=1650429749 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
