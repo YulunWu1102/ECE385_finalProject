@@ -4,14 +4,15 @@ module tank_selector (input			Clk, Reset,
 							 output[1:0]	currentTank);
 
 		
-		logic currTank, Flag;
+		logic currTank, Flag_Q, Flag_E;
 
 	
 		always_ff @ (posedge Clk or posedge Reset)begin
 		
 			if(Reset)begin
 				currTank <= 0;
-				Flag <= 0;
+				Flag_Q <= 0; //Q=14
+				Flag_E <= 0; //E=8
 			end
 				
 			else begin
@@ -19,27 +20,25 @@ module tank_selector (input			Clk, Reset,
 			
 				if (currentState == 0) begin
 					
-					if (keycode == 8'h14) begin
-						Flag <= 1;
+					if (keycode != 8'h14) begin
+						Flag_Q <= 1;
 					end
 					
-					else if(keycode == 8'h8) begin
-						Flag <= 1;
+					if(keycode != 8'h8) begin
+						Flag_E <= 1;
 					end
-					else begin
-					Flag <= 0;
-					end
+					
 				
 						
-					if ((Flag == 1) & (keycode == 8'h14)) begin
-						Flag <= 0;
-						currTank <= (currTank - 1) % 4;
+					if ((Flag_Q == 1) & (keycode == 8'h14)) begin
+						Flag_Q <= 0;
+						currTank <= (currTank - 1);
 					
 					end
 					
-					else if ((Flag == 1) & (keycode == 8'h8)) begin
-						Flag <= 0;
-						currTank <= (currTank + 1) % 4;
+					else if ((Flag_E == 1) & (keycode == 8'h8)) begin
+						Flag_E <= 0;
+						currTank <= (currTank + 1);
 					
 					end
 				

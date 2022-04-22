@@ -61,7 +61,7 @@ module lab62 (
 logic Reset_h, vssig, blank, sync, VGA_Clk;
 logic nextStateSig;
 logic [1:0] currState, currTank;
-logic [9:0] y_component_sig;
+logic [9:0] y_component_sig_A, y_component_sig_B;
 
 //=======================================================
 //  REG/WIRE declarations
@@ -70,11 +70,11 @@ logic [9:0] y_component_sig;
 	logic [3:0] hex_num_4, hex_num_3, hex_num_1, hex_num_0; //4 bit input hex digits
 	logic [1:0] signs;
 	logic [1:0] hundreds;
-	logic [9:0] drawxsig, drawysig, tankAxsig, tankAysig, tankAsizesig, bulletxsig, bulletysig;
+	logic [9:0] drawxsig, drawysig, tankAxsig, tankAysig, tankBxsig, tankBysig, tankAsizesig, bulletAxsig, bulletAysig, bulletBxsig, bulletBysig;
 	logic [7:0] Red, Blue, Green;
 	logic [7:0] keycode;
-	logic 		transig, shootsig;
-	logic [1:0] dirsig;
+	logic 		transig, shootAsig,shootBsig;
+	logic [1:0] dirAsig, dirBsig;
 
 //=======================================================
 //  Structural coding
@@ -170,18 +170,35 @@ logic [9:0] y_component_sig;
 
 	state_controller sc(.Reset(Reset_h), .Clk(VGA_VS), .nextStateSig(nextState), .currentState(currState));
 
-	tank_selector ts (.Clk(VGA_VS), .Reset(Reset_h), .keycode(keycode), .currentState(currState), .currentTank(currTank));
+	tank_selector tsA (.Clk(VGA_VS), .Reset(Reset_h), .keycode(keycode), .currentState(currState), .currentTank(currTank_A));
+	tank_selector_B tsB (.Clk(VGA_VS), .Reset(Reset_h), .keycode(keycode), .currentState(currState), .currentTank(currTank_B));
 	
 	
 	bulletA bullA(.frame_clk(VGA_VS), .Reset(Reset_h), 
 					.TankX(tankAxsig), .TankY(tankAysig), 
-					.shoot(shootsig), .Direction(dirsig), .transparent(transig), 
-					.BulletX(bulletxsig), .BulletY(bulletysig), .y_component(y_component_sig));
+					.shoot(shootAsig), .Direction(dirAsig), .transparent(transig), 
+					.BulletX(bulletAxsig), .BulletY(bulletAysig), .y_component(y_component_sig_A));
+					
+	bulletA bullB(.frame_clk(VGA_VS), .Reset(Reset_h), 
+					.TankX(tankBxsig), .TankY(tankBysig), 
+					.shoot(shootBsig), .Direction(dirBsig), .transparent(transig), 
+					.BulletX(bulletBxsig), .BulletY(bulletBysig), .y_component(y_component_sig_B));
+
 
 					
 					
 					
-	tankA tA(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), .TankX(tankAxsig), .TankY(tankAysig), .TankS(tankAsizesig), .Direction(dirsig), .shoot(shootsig), .y_component(y_component_sig));
+	tankA tA(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode),
+			   .TankX(tankAxsig), .TankY(tankAysig), .TankS(tankAsizesig), 
+				.Direction(dirAsig), .shoot(shootAsig), .y_component(y_component_sig_A));
+				
+				
+	tankB tB(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode),
+			   .TankX(tankBxsig), .TankY(tankBysig), .TankS(tankAsizesig), 
+				.Direction(dirBsig), .shoot(shootBsig), .y_component(y_component_sig_B));
+					
+				
+				
 					
 	vga_controller v(.Clk(MAX10_CLK1_50),       // 50 MHz clock
                                       .Reset(Reset_h),     // reset signal
@@ -194,8 +211,10 @@ logic [9:0] y_component_sig;
 													.DrawX(drawxsig),     // horizontal coordinate
 								              .DrawY(drawysig) );   // vertical coordinate
 
-	color_mapper c(.TankX(tankAxsig), .TankY(tankAysig), .BulletX(bulletxsig), .BulletY(bulletysig), .DrawX(drawxsig), .DrawY(drawysig), .Ball_size(tankAsizesig), .transparent(transig), 
-						.currentState(currState), .currentTank(currTank), 
+	color_mapper c(.TankX_A(tankAxsig), .TankY_A(tankAysig), .BulletX_A(bulletAxsig), .BulletY_A(bulletAysig), 
+						.TankX_B(tankBxsig), .TankY_B(tankBysig), .BulletX_B(bulletBxsig), .BulletY_B(bulletBysig),
+						.DrawX(drawxsig), .DrawY(drawysig), .Ball_size(tankAsizesig), .transparent(transig), 
+						.currentState(currState), .currentTank_A(currTank_A), .currentTank_B(currTank_B),
 						.Red(Red), .Green(Green), .Blue(Blue) );
 							  
 

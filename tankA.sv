@@ -1,17 +1,3 @@
-//-------------------------------------------------------------------------
-//    Ball.sv                                                            --
-//    Viral Mehta                                                        --
-//    Spring 2005                                                        --
-//                                                                       --
-//    Modified by Stephen Kempf 03-01-2006                               --
-//                              03-12-2007                               --
-//    Translated by Joe Meng    07-07-2013                               --
-//    Fall 2014 Distribution                                             --
-//                                                                       --
-//    For use with ECE 298 Lab 7                                         --
-//    UIUC ECE Department                                                --
-//-------------------------------------------------------------------------
-
 
 module  tankA ( input Reset, frame_clk,
 					input [7:0] keycode,
@@ -24,8 +10,8 @@ module  tankA ( input Reset, frame_clk,
 	 logic shootFlag;
 	 //logic [4:0] y_component;
 	 
-    parameter [9:0] Tank_X_Center=320;  // Center position on the X axis
-    parameter [9:0] Tank_Y_Center=240;  // Center position on the Y axis
+    parameter [9:0] Tank_X_Center=140;  // Center position on the X axis
+    parameter [9:0] Tank_Y_Center=200;  // Center position on the Y axis
     parameter [9:0] Tank_X_Min=0;       // Leftmost point on the X axis
     parameter [9:0] Tank_X_Max=639;     // Rightmost point on the X axis
     parameter [9:0] Tank_Y_Min=0;       // Topmost point on the Y axis
