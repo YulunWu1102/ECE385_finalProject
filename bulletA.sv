@@ -1,5 +1,6 @@
-module bullet(input frame_clk, Reset,
-				   input [9:0]  BallX, BallY,
+module bulletA(input [9:0] y_component,
+					input frame_clk, Reset,
+				   input [9:0]  TankX, TankY,
 					input shoot,
 					input [1:0] Direction,
 					output transparent,
@@ -29,8 +30,8 @@ module bullet(input frame_clk, Reset,
         begin 
             	Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
 		Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
-		Bullet_X_Pos <= BallY;
-		Bullet_Y_Pos <= BallX;
+		Bullet_X_Pos <= (TankY+20);
+		Bullet_Y_Pos <= (TankX+30);
 		transparent <= 1'b0;
 		isCarry <= 1'b1;
 		Ball_drop <= 1'b0;
@@ -47,70 +48,66 @@ module bullet(input frame_clk, Reset,
 //					Clk_counter <= Clk_counter + 1;
 //				end
 				 if ( (Bullet_Y_Pos + Bullet_Size) >= Bullet_Y_Max )begin  // Ball is at the bottom edge, BOUNCE!
-					  Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
-					  Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
+					  //Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
+					  //Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
 					  transparent <= 1'b0;
+					  Bullet_Y_Change <= 0;
 					  isCarry <= 1'b1;
 
 				 end
 					
 				 else if ( (Bullet_Y_Pos - Bullet_Size) <= Bullet_Y_Min )begin  // Ball is at the top edge, BOUNCE!
-					  Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
-					  Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
+					 // Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
+					  //Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
 					  transparent <= 1'b0;
 					  isCarry <= 1'b1;
+					  Bullet_Y_Change <= 0;
 				 end
 				 
 				  else if ( (Bullet_X_Pos + Bullet_Size) >= Bullet_X_Max ) begin // Ball is at the Right edge, BOUNCE!
-					 Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
-					  Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
+					 //Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
+					  //Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
 					  transparent <= 1'b0;  // 2's complement.
+					  Bullet_Y_Change <= 0;
 					  isCarry <= 1'b1;
 					end
 					
 				 else if ( (Bullet_X_Pos - Bullet_Size) <= Bullet_X_Min ) begin  // Ball is at the Left edge, BOUNCE!
-					  Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
-					  Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
+					  //Bullet_X_Motion <= 10'd0; //Ball_Y_Step;
+					  //Bullet_Y_Motion <= 10'd0; //Ball_X_Step;
 					  transparent <= 1'b0;
+					  Bullet_Y_Change <= 0;
 					  isCarry <= 1'b1;
 					  
 				 end
 				 
 					  //Ball_Y_Motion <= Ball_Y_Motion;  // Ball is somewhere in the middle, don't bounce, just keep moving
-					  
-				 else if (shoot == 1) begin
-						transparent <= 1'b0;
-						isCarry <= 1'b0;
-						
-						 case (Direction)
+				
+				else if(shoot == 0) begin
+					case (Direction)
 							2'b00 : begin
 										Bullet_X_Motion <= -5;//A
-										Bullet_Y_Change <= 0;
-										Ball_drop <= 1;
-																	
+										//Bullet_Y_Change <= -4;
+																											
 										
 									  end
 							2'b01 : begin
 										Bullet_X_Motion <= 5;//A
-										Bullet_Y_Change <= 0;
-										Ball_drop <= 1;
-																	
+										//Bullet_Y_Change <= -4;
 										
 									  end
 							
 							2'b10 : begin
-										Bullet_X_Motion <= 0;//A
-										Bullet_Y_Change <= 0;
-										Ball_drop <= 1;
-																	
+										Bullet_X_Motion <= Bullet_X_Motion;//A
+										//Bullet_Y_Change <= y_component;
+																
 										
 									  end
 							
 							2'b11 : begin
-										Bullet_X_Motion <= 0;//A
-										Bullet_Y_Change <= 0;
-										Ball_drop <= 1;
-																	
+										Bullet_X_Motion <= Bullet_X_Motion;//A
+										//Bullet_Y_Change <= y_component;
+															
 										
 									  end
 									  
@@ -119,30 +116,26 @@ module bullet(input frame_clk, Reset,
 							default: ;
 						endcase
 				 
+				
+				end
+	
+				 else if (shoot == 1) begin
+						transparent <= 1'b0;
+						isCarry <= 1'b0;
+						
 				 
 				 end
-				 if (Ball_drop == 1) begin
-					//if (Clk_counter % 2 == 0)begin
-				 		Bullet_Y_Change <= ((Bullet_Y_Change + 1));
-					//end
-					//else begin
-				 		//Bullet_Y_Change <= 0;
-					
-					//end
-					Bullet_Y_Motion <= Bullet_Y_Change ;
-				end
-				else
-				Bullet_Y_Motion <= 0;
-
 
 				 if (isCarry == 1) begin
-					Bullet_Y_Pos <= BallY;  // Update ball position
-					Bullet_X_Pos <= BallX;
+					Bullet_Y_Pos <= (TankY+15);  // Update ball position
+					Bullet_X_Pos <= (TankX+35);
 					Clk_counter <= 0;
-					Bullet_Y_Change <= 0;
+					Bullet_Y_Change <= y_component;
 				 
 				 end
 				 else begin
+					Bullet_Y_Change <= ((Bullet_Y_Change + 1));
+					Bullet_Y_Motion <= Bullet_Y_Change ;
 					Clk_counter <= Clk_counter + 1;
 					Bullet_Y_Pos <= (Bullet_Y_Pos + Bullet_Y_Motion);  // Update ball position
 					Bullet_X_Pos <= (Bullet_X_Pos + Bullet_X_Motion);

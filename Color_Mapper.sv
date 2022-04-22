@@ -13,7 +13,7 @@
 //-------------------------------------------------------------------------
 
 
-module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX, DrawY, Ball_size,
+module  color_mapper ( input        [9:0] TankX, TankY, BulletX, BulletY, DrawX, DrawY, Ball_size,
 							  input			transparent,
 							  input 			[1:0] currentState, currentTank,
 							  output logic [7:0]  Red, Green, Blue );
@@ -25,8 +25,8 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
 		
 	 //-----------------calculate co-ord to tank-----------------
     int DistX, DistY;
-	 assign DistX = DrawX - BallX;
-    assign DistY = DrawY - BallY;
+	 assign DistX = DrawX - TankX;
+    assign DistY = DrawY - TankY;
     
 	 
 	 //-----------------calculate co-ord to bullet-----------------
@@ -55,7 +55,7 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
      end 
 	  
 	  
-	 int TankX, TankY;
+	 int TankX_coord, TankY_coord;
 	 
 //	 always_comb
 //    begin: adjust_coor
@@ -87,13 +87,13 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
 
 	
 	//-----------------palette on background -----------------
-	logic [18:0] currentBackgroundADDR;
-	assign currentBackgroundADDR = (DrawY * 640) + DrawX;	
-	logic [3:0] colorIdx_background;
-	//assign colorIdx = 4'h3;
-	background_rom bgd( .addr(currentBackgroundADDR), .data(colorIdx_background));
-	logic [23:0] color_background;
-	palette plt_background_1(.colorIdx(colorIdx_background), .rgbVal(color_background));
+//	logic [18:0] currentBackgroundADDR;
+//	assign currentBackgroundADDR = (DrawY * 640) + DrawX;	
+//	logic [3:0] colorIdx_background;
+//	//assign colorIdx = 4'h3;
+//	background_rom bgd( .addr(currentBackgroundADDR), .data(colorIdx_background));
+//	logic [23:0] color_background;
+//	palette plt_background_1(.colorIdx(colorIdx_background), .rgbVal(color_background));
 
 	
 	
@@ -156,9 +156,26 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
 //			2'b01 : begin //fight color_rtk
 			
 			 if ((ball_on == 1'b1)) begin 
-					Red = color_tank_0[23:16];
-					Green = color_tank_0[15:8];
-					Blue = color_tank_0[7:0];	
+					if(color_tank_0 == 24'hB0B0B0)begin
+						if ((bullet_on == 1'b1)) begin 
+							Red = 8'hff;
+							Green = 8'h00;
+							Blue = 8'hff;
+					end  
+							
+					else begin				
+							Red = 8'h00; 
+							Green = 8'h00;
+							Blue = 8'h7f - DrawX[9:3];
+					end				
+					
+					end
+					else begin
+						Red = color_tank_0[23:16];
+						Green = color_tank_0[15:8];
+						Blue = color_tank_0[7:0];	
+					end
+					
 						
 			  end 
 			  
@@ -170,9 +187,9 @@ module  color_mapper ( input        [9:0] BallX, BallY, BulletX, BulletY, DrawX,
 					end  
 							
 					else begin				
-							Red = color_background[23:16]; 
-							Green = color_background[15:8];
-							Blue = color_background[7:0];
+							Red = 8'h00; 
+							Green = 8'h00;
+							Blue = 8'h7f - DrawX[9:3];
 					end
 			  
 							

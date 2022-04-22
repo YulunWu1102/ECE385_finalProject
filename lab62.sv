@@ -61,7 +61,7 @@ module lab62 (
 logic Reset_h, vssig, blank, sync, VGA_Clk;
 logic nextStateSig;
 logic [1:0] currState, currTank;
-
+logic [9:0] y_component_sig;
 
 //=======================================================
 //  REG/WIRE declarations
@@ -70,7 +70,7 @@ logic [1:0] currState, currTank;
 	logic [3:0] hex_num_4, hex_num_3, hex_num_1, hex_num_0; //4 bit input hex digits
 	logic [1:0] signs;
 	logic [1:0] hundreds;
-	logic [9:0] drawxsig, drawysig, ballxsig, ballysig, ballsizesig, bulletxsig, bulletysig;
+	logic [9:0] drawxsig, drawysig, tankAxsig, tankAysig, tankAsizesig, bulletxsig, bulletysig;
 	logic [7:0] Red, Blue, Green;
 	logic [7:0] keycode;
 	logic 		transig, shootsig;
@@ -173,15 +173,15 @@ logic [1:0] currState, currTank;
 	tank_selector ts (.Clk(VGA_VS), .Reset(Reset_h), .keycode(keycode), .currentState(currState), .currentTank(currTank));
 	
 	
-	bullet bull(.frame_clk(VGA_VS), .Reset(Reset_h), 
-					.BallX(ballxsig), .BallY(ballysig), 
+	bulletA bullA(.frame_clk(VGA_VS), .Reset(Reset_h), 
+					.TankX(tankAxsig), .TankY(tankAysig), 
 					.shoot(shootsig), .Direction(dirsig), .transparent(transig), 
-					.BulletX(bulletxsig), .BulletY(bulletysig));
+					.BulletX(bulletxsig), .BulletY(bulletysig), .y_component(y_component_sig));
 
 					
 					
 					
-	ball b(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), .BallX(ballxsig), .BallY(ballysig), .BallS(ballsizesig), .Direction(dirsig), .shoot(shootsig));
+	tankA tA(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), .TankX(tankAxsig), .TankY(tankAysig), .TankS(tankAsizesig), .Direction(dirsig), .shoot(shootsig), .y_component(y_component_sig));
 					
 	vga_controller v(.Clk(MAX10_CLK1_50),       // 50 MHz clock
                                       .Reset(Reset_h),     // reset signal
@@ -194,7 +194,7 @@ logic [1:0] currState, currTank;
 													.DrawX(drawxsig),     // horizontal coordinate
 								              .DrawY(drawysig) );   // vertical coordinate
 
-	color_mapper c(.BallX(ballxsig), .BallY(ballysig), .BulletX(bulletxsig), .BulletY(bulletysig), .DrawX(drawxsig), .DrawY(drawysig), .Ball_size(ballsizesig), .transparent(transig), 
+	color_mapper c(.TankX(tankAxsig), .TankY(tankAysig), .BulletX(bulletxsig), .BulletY(bulletysig), .DrawX(drawxsig), .DrawY(drawysig), .Ball_size(tankAsizesig), .transparent(transig), 
 						.currentState(currState), .currentTank(currTank), 
 						.Red(Red), .Green(Green), .Blue(Blue) );
 							  
