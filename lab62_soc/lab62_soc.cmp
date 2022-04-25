@@ -22,7 +22,9 @@
 			spi0_SS_n                      : out   std_logic;                                        -- SS_n
 			usb_gpx_export                 : in    std_logic                     := 'X';             -- export
 			usb_irq_export                 : in    std_logic                     := 'X';             -- export
-			usb_rst_export                 : out   std_logic                                         -- export
+			usb_rst_export                 : out   std_logic;                                        -- export
+			vga_port_backgrounddata        : out   std_logic_vector(7 downto 0);                     -- backgrounddata
+			vga_port_local_addr            : in    std_logic_vector(15 downto 0) := (others => 'X')  -- local_addr
 		);
 	end component lab62_soc;
 

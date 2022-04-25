@@ -4,7 +4,7 @@
  * Machine generated for CPU 'nios2_gen2_0' in SOPC Builder design 'lab62_soc'
  * SOPC Builder design path: ../../lab62_soc.sopcinfo
  *
- * Generated: Wed Apr 20 00:34:18 CDT 2022
+ * Generated: Mon Apr 25 17:04:21 CDT 2022
  */
 
 /*
@@ -142,6 +142,7 @@
 #define __ALTERA_AVALON_TIMER
 #define __ALTERA_NIOS2_GEN2
 #define __ALTPLL
+#define __BACKGROUND_INTERFACE
 
 
 /*
@@ -160,24 +161,38 @@
 #define ALT_NUM_INTERNAL_INTERRUPT_CONTROLLERS 1
 #define ALT_NUM_INTERRUPT_CONTROLLERS 1
 #define ALT_STDERR "/dev/jtag_uart_0"
-#define ALT_STDERR_BASE 0x1e0
+#define ALT_STDERR_BASE 0x1e8
 #define ALT_STDERR_DEV jtag_uart_0
 #define ALT_STDERR_IS_JTAG_UART
 #define ALT_STDERR_PRESENT
 #define ALT_STDERR_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDIN "/dev/jtag_uart_0"
-#define ALT_STDIN_BASE 0x1e0
+#define ALT_STDIN_BASE 0x1e8
 #define ALT_STDIN_DEV jtag_uart_0
 #define ALT_STDIN_IS_JTAG_UART
 #define ALT_STDIN_PRESENT
 #define ALT_STDIN_TYPE "altera_avalon_jtag_uart"
 #define ALT_STDOUT "/dev/jtag_uart_0"
-#define ALT_STDOUT_BASE 0x1e0
+#define ALT_STDOUT_BASE 0x1e8
 #define ALT_STDOUT_DEV jtag_uart_0
 #define ALT_STDOUT_IS_JTAG_UART
 #define ALT_STDOUT_PRESENT
 #define ALT_STDOUT_TYPE "altera_avalon_jtag_uart"
 #define ALT_SYSTEM_NAME "lab62_soc"
+
+
+/*
+ * background_interface_0 configuration
+ *
+ */
+
+#define ALT_MODULE_CLASS_background_interface_0 background_interface
+#define BACKGROUND_INTERFACE_0_BASE 0x20000
+#define BACKGROUND_INTERFACE_0_IRQ -1
+#define BACKGROUND_INTERFACE_0_IRQ_INTERRUPT_CONTROLLER_ID -1
+#define BACKGROUND_INTERFACE_0_NAME "/dev/background_interface_0"
+#define BACKGROUND_INTERFACE_0_SPAN 65536
+#define BACKGROUND_INTERFACE_0_TYPE "background_interface"
 
 
 /*
@@ -224,7 +239,7 @@
  */
 
 #define ALT_MODULE_CLASS_jtag_uart_0 altera_avalon_jtag_uart
-#define JTAG_UART_0_BASE 0x1e0
+#define JTAG_UART_0_BASE 0x1e8
 #define JTAG_UART_0_IRQ 1
 #define JTAG_UART_0_IRQ_INTERRUPT_CONTROLLER_ID 0
 #define JTAG_UART_0_NAME "/dev/jtag_uart_0"
@@ -436,13 +451,13 @@
  */
 
 #define ALT_MODULE_CLASS_sysid_qsys_0 altera_avalon_sysid_qsys
-#define SYSID_QSYS_0_BASE 0x1e8
+#define SYSID_QSYS_0_BASE 0x1e0
 #define SYSID_QSYS_0_ID 0
 #define SYSID_QSYS_0_IRQ -1
 #define SYSID_QSYS_0_IRQ_INTERRUPT_CONTROLLER_ID -1
 #define SYSID_QSYS_0_NAME "/dev/sysid_qsys_0"
 #define SYSID_QSYS_0_SPAN 8
-#define SYSID_QSYS_0_TIMESTAMP 1650429749
+#define SYSID_QSYS_0_TIMESTAMP 1650923929
 #define SYSID_QSYS_0_TYPE "altera_avalon_sysid_qsys"
 
 

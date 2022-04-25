@@ -75,6 +75,11 @@ logic [9:0] y_component_sig_A, y_component_sig_B;
 	logic [7:0] keycode;
 	logic 		transig, shootAsig,shootBsig;
 	logic [1:0] dirAsig, dirBsig;
+	
+	
+	//4.25 update: OCM interface
+	logic [7:0]VGA_BGDATA;
+	logic [15:0] VGA_LOCALADDR;
 
 //=======================================================
 //  Structural coding
@@ -125,6 +130,8 @@ logic [9:0] y_component_sig_A, y_component_sig_B;
 	assign VGA_G = Green[7:4];
 	
 	
+	
+	
 	lab62_soc u0 (
 		.clk_clk                           (MAX10_CLK1_50),  //clk.clk
 		.reset_reset_n                     (1'b1),           //reset.reset_n
@@ -159,7 +166,9 @@ logic [9:0] y_component_sig_A, y_component_sig_B;
 		//LEDs and HEX
 		.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
 		.leds_export({hundreds, signs, LEDR}),
-		.keycode_export(keycode)
+		.keycode_export(keycode),
+		.vga_port_backgrounddata(VGA_BGDATA),        //                vga_port.backgrounddata
+		.vga_port_local_addr(VGA_LOCALADDR) 
 		
 	 );
 
@@ -215,7 +224,9 @@ logic [9:0] y_component_sig_A, y_component_sig_B;
 						.TankX_B(tankBxsig), .TankY_B(tankBysig), .BulletX_B(bulletBxsig), .BulletY_B(bulletBysig),
 						.DrawX(drawxsig), .DrawY(drawysig), .Ball_size(tankAsizesig), .transparent(transig), 
 						.currentState(currState), .currentTank_A(currTank_A), .currentTank_B(currTank_B),
-						.Red(Red), .Green(Green), .Blue(Blue) );
+						.Red(Red), .Green(Green), .Blue(Blue),
+						.vga_port_backgrounddata(VGA_BGDATA),        //                vga_port.backgrounddata
+						.vga_port_local_addr(VGA_LOCALADDR) 	);
 							  
 
 

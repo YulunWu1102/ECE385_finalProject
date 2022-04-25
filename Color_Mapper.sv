@@ -17,6 +17,8 @@ module  color_mapper ( input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A
 							  input        [9:0] TankX_B, TankY_B, BulletX_B, BulletY_B, 
 							  input			transparent,
 							  input 			[1:0] currentState, currentTank_A,currentTank_B,
+							  input			[7:0]  vga_port_backgrounddata,
+							  output 		[15:0] vga_port_local_addr,
 							  output logic [7:0]  Red, Green, Blue );
     
     logic ball_on_A, bullet_on_A, select_on_A;

@@ -1,0 +1,39 @@
+/*
+ *  text_mode_vga.h
+ *	Minimal driver for text mode VGA support, ECE 385 Summer 2021 Lab 6
+ *  You may wish to extend this driver for your final project/extra credit project
+ * 
+ *  Created on: Jul 17, 2021
+ *      Author: zuofu
+ */
+
+#ifndef TEXT_MODE_VGA_COLOR_H_
+#define TEXT_MODE_VGA_COLOR_H_
+
+#define COLUMNS 80
+#define ROWS 30
+
+#include <system.h>
+#include <alt_types.h>
+
+struct TEXT_VGA_STRUCT {
+	alt_u8 VRAM[76800];
+
+};
+
+
+
+//you may have to change this line depending on your platform designer
+static volatile struct TEXT_VGA_STRUCT* vga_ctrl = BACKGROUND_INTERFACE_0_BASE;
+
+//CGA colors with names
+
+
+
+void VGAColorClr();
+
+
+void VGARender(); //Call this for your demo
+
+
+#endif /* TEXT_MODE_VGA_COLOR_H_ */
