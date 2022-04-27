@@ -14,7 +14,9 @@
 
 
 module  color_mapper ( input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A, DrawX, DrawY, Ball_size,
+							  input 			[1:0] Direction_A,
 							  input        [9:0] TankX_B, TankY_B, BulletX_B, BulletY_B, 
+							  input 			[1:0] Direction_B,
 							  input			transparent,
 							  input 			[1:0] currentState, currentTank_A,currentTank_B,
 							  input			[7:0]  vga_port_backgrounddata,
@@ -24,6 +26,22 @@ module  color_mapper ( input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A
     logic ball_on_A, bullet_on_A, select_on_A;
 	 logic ball_on_B, bullet_on_B, select_on_B;
 	 logic [7:0] currData;
+	 logic [4:0] currBGIdx;
+	 logic [23:0] currBG_RGB;
+	 //-----------------calculate the background address to feed to OCM-----------------
+	 assign vga_port_local_addr = ((DrawY / 2) * 320 + DrawX / 2)/2;
+	 
+	 always_comb begin: bg_logic
+		if(DrawX % 2 == 0)begin
+			currBGIdx = vga_port_backgrounddata[7:4];
+		end
+		else begin
+			currBGIdx = vga_port_backgrounddata[3:0];
+		end
+	 
+	 end
+	 
+	 palette bg(.colorIdx(currBGIdx), .rgbVal(currBG_RGB));
 	 
 	 
 		
@@ -81,22 +99,22 @@ module  color_mapper ( input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A
 	//-----------------palette on tank_0 (A) -----------------
 	logic [15:0] currentTankADDR_A;
 	assign currentTankADDR_A = (DistY_A * 70) + DistX_A;	
-	logic [3:0] colorIdx_tank_A;
+	logic [7:0] colorIdx_tank_A;
 	//assign colorIdx = 4'h3;
-	rtank_rom rtk_A( .addr(currentTankADDR_A), .tankSelection(currentTank_A), .data(colorIdx_tank_A));
+	rtank_rom rtk_A( .addr(currentTankADDR_A), .tankSelection(currentTank_A), .data(colorIdx_tank_A), .Direction(Direction_A));
 	logic [23:0] color_tank_0;
-	palette plt_tank_0(.colorIdx(colorIdx_tank_A), .rgbVal(color_tank_0));
+	palette plt_tank_0(.colorIdx(colorIdx_tank_A[7:4]), .rgbVal(color_tank_0));
 	
 	
 	
 	//-----------------palette on tank_1 (B) -----------------
 	logic [15:0] currentTankADDR_B;
 	assign currentTankADDR_B = (DistY_B * 70) + DistX_B;	
-	logic [3:0] colorIdx_tan_B;
+	logic [7:0] colorIdx_tank_B;
 	//assign colorIdx = 4'h3;
-	rtank_rom rtk_B( .addr(currentTankADDR_B), .tankSelection(currentTank_B), .data(colorIdx_tank_B));
+	rtank_rom rtk_B( .addr(currentTankADDR_B), .tankSelection(currentTank_B), .data(colorIdx_tank_B), .Direction(Direction_B));
 	logic [23:0] color_tank_1;
-	palette plt_tank_1(.colorIdx(colorIdx_tank_B), .rgbVal(color_tank_1));
+	palette plt_tank_1(.colorIdx(colorIdx_tank_B[7:4]), .rgbVal(color_tank_1));
 
 	
 
@@ -191,9 +209,9 @@ module  color_mapper ( input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A
 				 end
 							
 				else begin
-					Red = 8'h00; 
-					Green = 8'h7f - DrawX[9:3];
-					Blue = 8'h00;
+					Red = currBG_RGB[23:16];
+					Green = currBG_RGB[15:8];
+					Blue = currBG_RGB[7:0]; 
 				
 				end
 							

@@ -16,7 +16,7 @@
 #include "usb_kb/transfer.h"
 #include "usb_kb/usb_ch9.h"
 #include "usb_kb/USB.h"
-//#include "text_mode_vga_color.h"
+#include "text_mode_vga_color.h"
 extern HID_DEVICE hid_device;
 
 static BYTE addr = 1; 				//hard-wired USB address
@@ -133,24 +133,29 @@ int main() {
 
 
 	printf("start main");
+
+
+	printf("start VGA rendering");
+	//VGAColorClr();
+	VGARender();
+
+
 	BYTE rcode;
-	BOOT_MOUSE_REPORT buf;		//USB mouse report
-	BOOT_KBD_REPORT kbdbuf;
+		BOOT_MOUSE_REPORT buf;		//USB mouse report
+		BOOT_KBD_REPORT kbdbuf;
 
-	BYTE runningdebugflag = 0;//flag to dump out a bunch of information when we first get to USB_STATE_RUNNING
-	BYTE errorflag = 0; //flag once we get an error device so we don't keep dumping out state info
-	BYTE device;
-	WORD keycode;
+		BYTE runningdebugflag = 0;//flag to dump out a bunch of information when we first get to USB_STATE_RUNNING
+		BYTE errorflag = 0; //flag once we get an error device so we don't keep dumping out state info
+		BYTE device;
+		WORD keycode;
 
-	printf("initializing MAX3421E...\n");
-	MAX3421E_init();
-	printf("initializing USB...\n");
-	USB_init();
+		printf("initializing MAX3421E...\n");
+		MAX3421E_init();
+		printf("initializing USB...\n");
+		USB_init();
 
-//	printf("start VGA rendering");
-//	VGAColorClr();
-//	VGARender();
 
+	printf("finish OCM initialization");
 	while (1) {
 		printf(".");
 		MAX3421E_Task();

@@ -220,8 +220,8 @@ logic [9:0] y_component_sig_A, y_component_sig_B;
 													.DrawX(drawxsig),     // horizontal coordinate
 								              .DrawY(drawysig) );   // vertical coordinate
 
-	color_mapper c(.TankX_A(tankAxsig), .TankY_A(tankAysig), .BulletX_A(bulletAxsig), .BulletY_A(bulletAysig), 
-						.TankX_B(tankBxsig), .TankY_B(tankBysig), .BulletX_B(bulletBxsig), .BulletY_B(bulletBysig),
+	color_mapper c(.TankX_A(tankAxsig), .TankY_A(tankAysig), .BulletX_A(bulletAxsig), .BulletY_A(bulletAysig), .Direction_A(dirAsig),
+						.TankX_B(tankBxsig), .TankY_B(tankBysig), .BulletX_B(bulletBxsig), .BulletY_B(bulletBysig), .Direction_B(dirBsig),
 						.DrawX(drawxsig), .DrawY(drawysig), .Ball_size(tankAsizesig), .transparent(transig), 
 						.currentState(currState), .currentTank_A(currTank_A), .currentTank_B(currTank_B),
 						.Red(Red), .Green(Green), .Blue(Blue),
