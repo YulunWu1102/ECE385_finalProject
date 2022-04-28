@@ -20,6 +20,8 @@ module  tankA ( input Reset, frame_clk,
     parameter [9:0] Tank_Y_Step=1;      // Step size on the Y axis
 
     assign Tank_Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	 
+	 
    
     always_ff @ (posedge Reset or posedge frame_clk )
     begin: Move_Tank
@@ -27,8 +29,8 @@ module  tankA ( input Reset, frame_clk,
         begin 
             Tank_Y_Motion <= 10'd0; //Ball_Y_Step;
 				Tank_X_Motion <= 10'd0; //Ball_X_Step;
-				Tank_Y_Pos <= Tank_Y_Center;
 				Tank_X_Pos <= Tank_X_Center;
+				Tank_Y_Pos <= 607*(Tank_X_Center**2)/1562500 - 71*Tank_X_Center/500 + 267 - 45;
 				shootFlag <= 1'b0;
 				shoot <= 1'b0;
 				y_component <= 9'd0;
@@ -84,7 +86,7 @@ module  tankA ( input Reset, frame_clk,
 									y_component <= y_component;
 								end
 								
-							  Direction <= 2;
+							  //Direction <= 2;
 							  if ( (Tank_Y_Pos - Tank_Size) <= Tank_Y_Min )  // Ball is at the top edge, BOUNCE!
 									Tank_Y_Motion <= Tank_Y_Step;
 							  else
@@ -102,7 +104,7 @@ module  tankA ( input Reset, frame_clk,
 							   	y_component <= y_component;
 							  end
 								
-							  Direction <= 3;
+							  //Direction <= 3;
 							  if ( (Tank_Y_Pos - Tank_Size) <= Tank_Y_Min )  // Ball is at the top edge, BOUNCE!
 									Tank_Y_Motion <= Tank_Y_Step;
 							  else
@@ -141,9 +143,9 @@ module  tankA ( input Reset, frame_clk,
 					end
 			   endcase
 				 
-				 Tank_Y_Pos <= (Tank_Y_Pos + Tank_Y_Motion);  // Update ball position
+//				 Tank_Y_Pos <= (Tank_Y_Pos + Tank_Y_Motion);  // Update ball position
 				 Tank_X_Pos <= (Tank_X_Pos + Tank_X_Motion);
-			
+				 Tank_Y_Pos <= 607*(Tank_X_Pos**2)/1562500 - 71*Tank_X_Pos/500 + 267 - 45;
 			
 
 			

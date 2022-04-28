@@ -13,7 +13,8 @@
 //-------------------------------------------------------------------------
 
 
-module  color_mapper ( input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A, DrawX, DrawY, Ball_size,
+module  color_mapper ( input logic			VGA_Clk, Reset,
+							  input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A, DrawX, DrawY, Ball_size,
 							  input 			[1:0] Direction_A,
 							  input        [9:0] TankX_B, TankY_B, BulletX_B, BulletY_B, 
 							  input 			[1:0] Direction_B,
@@ -91,14 +92,45 @@ module  color_mapper ( input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A
 //    end 
 	 
 	 
+	 
+	//important trY::::::::::::::::::::::::::::::::: ROTATION MATRIX CALCULATION FOR TANK A :::::::::::::::::::::::::::::::::
+	int TankA_End_Y;
+	int TankA_delta_Y;
+	assign TankA_End_Y = 607*((TankX_A+65)**2)/1562500 - 71*TankX_A/500 + 267 - 45;
+	assign TankA_delta_Y = TankA_End_Y - TankY_A;
+	//Rotation Matrix: 
+	//x' = x*cos(a) -y*sin(a), y' = x*sin(a)+y*cos(a)
+	//small angle theorem: tan(a) = a = TankA_delta_Y / Length
+	//cos(a) = (1-tan^2(a/2))/(1+tan^2(a/2)) = (4*(L**2)-(TankA_delta_Y**2))/(4*(L**2)+(TankA_delta_Y**2))
+	//sin(a) = (2tan(a/2))/(1+tan^2(a/2)) = (4*TankA_delta_Y*L)/(4*(L**2)+(TankA_delta_Y**2))
+	int TankA_Rotate_X, TankA_Rotate_Y;
+	always_comb begin
+		TankA_Rotate_X = DistX_A*(4*(70**2)-(TankA_delta_Y**2))/(4*(70**2)+(TankA_delta_Y**2))+DistY_A*(4*TankA_delta_Y*70)/(4*(70**2)+(TankA_delta_Y**2));
+		TankA_Rotate_Y = DistY_A*(4*(70**2)-(TankA_delta_Y**2))/(4*(70**2)+(TankA_delta_Y**2))-DistX_A*(4*TankA_delta_Y*70)/(4*(70**2)+(TankA_delta_Y**2));
+		
+		if(TankA_Rotate_X > 70) TankA_Rotate_X = 70;
+		else begin
+			if(TankA_Rotate_X < 0) TankA_Rotate_X = 0;
+			else begin
+				TankA_Rotate_X = TankA_Rotate_X;
+			end		
+		end
+		
+		if(TankA_Rotate_Y > 50) TankA_Rotate_X = 50;
+		else begin
+			if(TankA_Rotate_X < 0) TankA_Rotate_X = 0;
+			else begin
+				TankA_Rotate_X = TankA_Rotate_X;
+			end		
+		end
+	
+	end
+	
 	  
-//	 font_rom fr(.addr(DistY + (currentTank+2) * 17),
-//					.data(currData)
-//						 );	 
-//	 
+
 	//-----------------palette on tank_0 (A) -----------------
 	logic [15:0] currentTankADDR_A;
-	assign currentTankADDR_A = (DistY_A * 70) + DistX_A;	
+	assign currentTankADDR_A = (TankA_Rotate_Y * 70) + TankA_Rotate_X;	
 	logic [7:0] colorIdx_tank_A;
 	//assign colorIdx = 4'h3;
 	rtank_rom rtk_A( .addr(currentTankADDR_A), .tankSelection(currentTank_A), .data(colorIdx_tank_A), .Direction(Direction_A));
@@ -187,7 +219,7 @@ module  color_mapper ( input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A
 		 
 		 
 		 
-	always_comb
+	always_ff @(posedge VGA_Clk or posedge Reset)
     begin:RGB_Display
 	 
 		case (currentState)
@@ -195,23 +227,23 @@ module  color_mapper ( input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A
 			2'b00	:	begin //selection
 				 if (select_on_A) begin
 				 
-						Red = color_tank_0[23:16];
-						Green = color_tank_0[15:8];
-						Blue = color_tank_0[7:0]; 
+						Red <= color_tank_0[23:16];
+						Green <= color_tank_0[15:8];
+						Blue <= color_tank_0[7:0]; 
 				 
 				 end
 				 else if (select_on_B) begin
 				 
-					Red = color_tank_1[23:16];
-					Green = color_tank_1[15:8];
-					Blue = color_tank_1[7:0]; 
+					Red <= color_tank_1[23:16];
+					Green <= color_tank_1[15:8];
+					Blue <= color_tank_1[7:0]; 
 					 
 				 end
 							
 				else begin
-					Red = currBG_RGB[23:16];
-					Green = currBG_RGB[15:8];
-					Blue = currBG_RGB[7:0]; 
+					Red <= currBG_RGB[23:16];
+					Green <= currBG_RGB[15:8];
+					Blue <= currBG_RGB[7:0]; 
 				
 				end
 							
@@ -226,52 +258,52 @@ module  color_mapper ( input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A
 				if(ball_on_B) begin//bis on or not
 					if(bullet_on_A)begin
 						if(bullet_on_B) begin //priority is bullet B
-							Red = 8'hff;
-							Green = 8'h00;
-							Blue = 8'hff;
+							Red <= 8'hff;
+							Green <= 8'h00;
+							Blue <= 8'hff;
 						end
 						else begin //second priority is bullet A
-							Red = 8'hff;
-							Green = 8'hff;
+							Red <= 8'hff;
+							Green <= 8'hff;
 							Blue = 8'h00;
 						end
 					end
 					else begin
 						if(bullet_on_B) begin //priority is bullet B
-							Red = 8'hff;
-							Green = 8'h00;
-							Blue = 8'hff;
+							Red <= 8'hff;
+							Green <= 8'h00;
+							Blue <= 8'hff;
 						end
 						else begin //second priority is bullet A
-							Red = color_tank_1[23:16];
-							Green = color_tank_1[15:8];
-							Blue = color_tank_1[7:0]; 
+							Red <= color_tank_1[23:16];
+							Green <= color_tank_1[15:8];
+							Blue <= color_tank_1[7:0]; 
 						end
 					end				
 				end
 				else begin
 					if(bullet_on_A)begin
 						if(bullet_on_B) begin //priority is bullet B
-							Red = 8'hff;
-							Green = 8'h00;
-							Blue = 8'hff;
+							Red <= 8'hff;
+							Green <= 8'h00;
+							Blue <= 8'hff;
 						end
 						else begin //second priority is bullet A
-							Red = 8'hff;
-							Green = 8'hff;
-							Blue = 8'h00;
+							Red <= 8'hff;
+							Green <= 8'hff;
+							Blue <= 8'h00;
 						end
 					end
 					else begin
 						if(bullet_on_B) begin //priority is bullet B
-							Red = 8'hff;
-							Green = 8'h00;
-							Blue = 8'hff;
+							Red <= 8'hff;
+							Green <= 8'h00;
+							Blue <= 8'hff;
 							end
 							else begin //second priority is bullet A
-							Red = color_tank_0[23:16];
-							Green = color_tank_0[15:8];
-							Blue = color_tank_0[7:0]; 
+							Red <= color_tank_0[23:16];
+							Green <= color_tank_0[15:8];
+							Blue <= color_tank_0[7:0]; 
 						end
 					end				
 				end		
@@ -280,64 +312,68 @@ module  color_mapper ( input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A
 			if(ball_on_B) begin//bis on or not
 				if(bullet_on_A)begin
 					if(bullet_on_B) begin //priority is bullet B
-						Red = 8'hff;
-						Green = 8'h00;
-						Blue = 8'hff;
+						Red <= 8'hff;
+						Green <= 8'h00;
+						Blue <= 8'hff;
 					end
 					else begin //second priority is bullet A
-						Red = 8'hff;
-						Green = 8'hff;
-						Blue = 8'h00;
+						Red <= 8'hff;
+						Green <= 8'hff;
+						Blue <= 8'h00;
 					end
 				end
 				else begin
 					if(bullet_on_B) begin //priority is bullet B
-						Red = 8'hff;
-						Green = 8'h00;
-						Blue = 8'hff;
+						Red <= 8'hff;
+						Green <= 8'h00;
+						Blue <= 8'hff;
 					end
 					else begin //second priority is bullet A
-						Red = color_tank_1[23:16];
-						Green = color_tank_1[15:8];
-						Blue = color_tank_1[7:0]; 
+						Red <= color_tank_1[23:16];
+						Green <= color_tank_1[15:8];
+						Blue <= color_tank_1[7:0]; 
 					end
 				end				
 			end
 			else begin
 				if(bullet_on_A)begin
 					if(bullet_on_B) begin //priority is bullet B
-						Red = 8'hff;
-						Green = 8'h00;
-						Blue = 8'hff;
+						Red <= 8'hff;
+						Green <= 8'h00;
+						Blue <= 8'hff;
 					end
 					else begin //second priority is bullet A
-						Red = 8'hff;
-						Green = 8'hff;
-						Blue = 8'h00;
+						Red <= 8'hff;
+						Green <= 8'hff;
+						Blue <= 8'h00;
 					end
 				end
 				else begin
 					if(bullet_on_B) begin //priority is bullet B
-						Red = 8'hff;
-						Green = 8'h00;
-						Blue = 8'hff;
+						Red <= 8'hff;
+						Green <= 8'h00;
+						Blue <= 8'hff;
 						end
 						else begin //second priority is bullet A
-						Red = 8'h7f - DrawX[9:3];
-						Green = 8'h00;
-						Blue = 8'h00;
-					end
-				end				
-			end					
-		
-		end
-		
-		end
+						Red <= 8'h7f - DrawX[9:3];
+						Green <= 8'h00;
+						Blue <= 8'h00;
+						end
+					end				
+				end					
 			
+			end
+//		
+		end
+//			
 		default	: begin //over
-			Red = 8'h7f - DrawX[9:3];
-			Green = 8'h00;
-			Blue = 8'h00;
+		//always_ff @(posedge VGA_Clk or posedge Reset) begin:rendering
+		
+		Red <= 8'h00;
+		Green <= 8'hff - DrawX[9:3];
+		Blue <= 8'hff;
+		
+
 		end
 					
 			

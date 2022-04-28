@@ -84,7 +84,7 @@ module  tankB ( input Reset, frame_clk,
 									y_component <= y_component;
 								end
 								
-							  Direction <= 2;
+							  //Direction <= 2;
 							  if ( (Tank_Y_Pos - Tank_Size) <= Tank_Y_Min )  // Ball is at the top edge, BOUNCE!
 									Tank_Y_Motion <= Tank_Y_Step;
 							  else
@@ -102,7 +102,7 @@ module  tankB ( input Reset, frame_clk,
 							   	y_component <= y_component;
 							  end
 								
-							  Direction <= 3;
+							  //Direction <= 3;
 							  if ( (Tank_Y_Pos - Tank_Size) <= Tank_Y_Min )  // Ball is at the top edge, BOUNCE!
 									Tank_Y_Motion <= Tank_Y_Step;
 							  else
