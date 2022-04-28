@@ -6504,3 +6504,39 @@ Info:                 65408 KBytes free for stack + heap.
 Info: Creating tankStars.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source tankStars.elf >tankStars.objdump
 [tankStars build complete]
+11:11:47 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+11:12:28 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+11:12:30 **** Incremental Build of configuration Nios II for project tankStars_bsp ****
+make all 
+[BSP build complete]
+11:12:42 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+11:13:27 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+11:26:26 **** Incremental Build of configuration Nios II for project tankStars_bsp ****
+make all 
+[BSP build complete]
+11:27:42 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]

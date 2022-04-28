@@ -4,7 +4,8 @@ module tank_selector (input			Clk, Reset,
 							 output[1:0]	currentTank);
 
 		
-		logic currTank, Flag_Q, Flag_E;
+		logic Flag_Q, Flag_E;
+		logic [1:0] currTank;
 
 	
 		always_ff @ (posedge Clk or posedge Reset)begin

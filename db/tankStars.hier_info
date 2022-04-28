@@ -92779,10 +92779,12 @@ currentState[1] <= currS[1].DB_MAX_OUTPUT_PORT_TYPE
 |lab62|tank_selector:tsA
 Clk => Flag_E.CLK
 Clk => Flag_Q.CLK
-Clk => currTank.CLK
+Clk => currTank[0].CLK
+Clk => currTank[1].CLK
 Reset => Flag_E.ACLR
 Reset => Flag_Q.ACLR
-Reset => currTank.ACLR
+Reset => currTank[0].ACLR
+Reset => currTank[1].ACLR
 keycode[0] => Equal1.IN7
 keycode[0] => Equal2.IN7
 keycode[1] => Equal1.IN6
@@ -92801,45 +92803,39 @@ keycode[7] => Equal1.IN2
 keycode[7] => Equal2.IN1
 currentState[0] => Equal0.IN31
 currentState[1] => Equal0.IN30
-currentTank[0] <= currTank.DB_MAX_OUTPUT_PORT_TYPE
-currentTank[1] <= <GND>
+currentTank[0] <= currTank[0].DB_MAX_OUTPUT_PORT_TYPE
+currentTank[1] <= currTank[1].DB_MAX_OUTPUT_PORT_TYPE
 
 
 |lab62|tank_selector_B:tsB
 Clk => Flag_O.CLK
 Clk => Flag_U.CLK
-Clk => currTank.CLK
+Clk => currTank[0].CLK
+Clk => currTank[1].CLK
 Reset => Flag_O.ACLR
 Reset => Flag_U.ACLR
-Reset => currTank.ACLR
+Reset => currTank[0].ACLR
+Reset => currTank[1].ACLR
 keycode[0] => Equal1.IN7
 keycode[0] => Equal2.IN7
-keycode[0] => Equal3.IN7
 keycode[1] => Equal1.IN6
-keycode[1] => Equal2.IN6
-keycode[1] => Equal3.IN1
+keycode[1] => Equal2.IN1
 keycode[2] => Equal1.IN5
-keycode[2] => Equal2.IN5
-keycode[2] => Equal3.IN6
-keycode[3] => Equal1.IN0
-keycode[3] => Equal2.IN1
-keycode[3] => Equal3.IN5
-keycode[4] => Equal1.IN4
+keycode[2] => Equal2.IN6
+keycode[3] => Equal1.IN1
+keycode[3] => Equal2.IN5
+keycode[4] => Equal1.IN0
 keycode[4] => Equal2.IN0
-keycode[4] => Equal3.IN0
-keycode[5] => Equal1.IN3
+keycode[5] => Equal1.IN4
 keycode[5] => Equal2.IN4
-keycode[5] => Equal3.IN4
-keycode[6] => Equal1.IN2
+keycode[6] => Equal1.IN3
 keycode[6] => Equal2.IN3
-keycode[6] => Equal3.IN3
-keycode[7] => Equal1.IN1
+keycode[7] => Equal1.IN2
 keycode[7] => Equal2.IN2
-keycode[7] => Equal3.IN2
 currentState[0] => Equal0.IN31
 currentState[1] => Equal0.IN30
-currentTank[0] <= currTank.DB_MAX_OUTPUT_PORT_TYPE
-currentTank[1] <= <GND>
+currentTank[0] <= currTank[0].DB_MAX_OUTPUT_PORT_TYPE
+currentTank[1] <= currTank[1].DB_MAX_OUTPUT_PORT_TYPE
 
 
 |lab62|bulletA:bullA

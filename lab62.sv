@@ -62,7 +62,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 logic nextStateSig;
 logic [1:0] currState, currTank;
 logic [9:0] y_component_sig_A, y_component_sig_B;
-
+logic [1:0] currTank_A, currTank_B;
 //=======================================================
 //  REG/WIRE declarations
 //=======================================================

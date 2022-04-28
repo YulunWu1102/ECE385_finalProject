@@ -4,8 +4,8 @@ module tank_selector_B (input			Clk, Reset,
 							 output[1:0]	currentTank);
 
 		
-		logic currTank, Flag_U, Flag_O;
-
+		logic Flag_U, Flag_O;
+		logic [1:0] currTank;
 	
 		always_ff @ (posedge Clk or posedge Reset)begin
 		
@@ -24,7 +24,7 @@ module tank_selector_B (input			Clk, Reset,
 						Flag_U <= 1;
 					end
 					
-					if(keycode != 8'h8) begin
+					if(keycode != 8'h12) begin
 						Flag_O <= 1;
 					end
 					
