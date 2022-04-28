@@ -1,14 +1,10 @@
 //-------------------------------------------------------------------------
 //    Color_Mapper.sv                                                    --
-//    Stephen Kempf                                                      --
-//    3-1-06                                                             --
+//    Yulun Wu                                                           --
+//    April 2022                                                         --
+//                                                                       --                                       
 //                                                                       --
-//    Modified by David Kesler  07-16-2008                               --
-//    Translated by Joe Meng    07-07-2013                               --
-//                                                                       --
-//    Fall 2014 Distribution                                             --
-//                                                                       --
-//    For use with ECE 385 Lab 7                                         --
+//    For Final Project: Tank Stars                                      --
 //    University of Illinois ECE Department                              --
 //-------------------------------------------------------------------------
 
@@ -149,6 +145,21 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	palette plt_tank_1(.colorIdx(colorIdx_tank_B[7:4]), .rgbVal(color_tank_1));
 
 	
+	
+	//-----------------palette on bullet (A) -----------------
+	logic [23:0] color_bullet_0;
+	assign color_bullet_0[23:16] = (4-currentTank_A) * 16;
+	assign color_bullet_0[15:8] = currentTank_A * 16;
+	assign color_bullet_0[7:0] = (4-currentTank_A) * 16;
+	
+	
+	
+	//-----------------palette on bullet (B) -----------------
+	logic [23:0] color_bullet_1;
+	assign color_bullet_1[23:16] = (4-currentTank_B) * 16;
+	assign color_bullet_1[15:8] = currentTank_B * 16;
+	assign color_bullet_1[7:0] = (4-currentTank_B) * 16;
+	
 
 	
 	//-----------------palette on background -----------------
@@ -258,23 +269,23 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 				if(ball_on_B) begin//bis on or not
 					if(bullet_on_A)begin
 						if(bullet_on_B) begin //priority is bullet B
-							Red <= 8'hff;
-							Green <= 8'h00;
-							Blue <= 8'hff;
+							Red <= color_bullet_1[23:16];
+							Green <= color_bullet_1[15:8];
+							Blue <= color_bullet_1[7:0];
 						end
 						else begin //second priority is bullet A
-							Red <= 8'hff;
-							Green <= 8'hff;
-							Blue = 8'h00;
+							Red <= color_bullet_0[23:16];
+							Green <= color_bullet_0[15:8];
+							Blue <= color_bullet_0[7:0];
 						end
 					end
 					else begin
 						if(bullet_on_B) begin //priority is bullet B
-							Red <= 8'hff;
-							Green <= 8'h00;
-							Blue <= 8'hff;
+							Red <= color_bullet_1[23:16];
+							Green <= color_bullet_1[15:8];
+							Blue <= color_bullet_1[7:0];
 						end
-						else begin //second priority is bullet A
+						else begin //second priority is tank B
 							Red <= color_tank_1[23:16];
 							Green <= color_tank_1[15:8];
 							Blue <= color_tank_1[7:0]; 
@@ -284,23 +295,23 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 				else begin
 					if(bullet_on_A)begin
 						if(bullet_on_B) begin //priority is bullet B
-							Red <= 8'hff;
-							Green <= 8'h00;
-							Blue <= 8'hff;
+							Red <= color_bullet_1[23:16];
+							Green <= color_bullet_1[15:8];
+							Blue <= color_bullet_1[7:0];
 						end
 						else begin //second priority is bullet A
-							Red <= 8'hff;
-							Green <= 8'hff;
-							Blue <= 8'h00;
+							Red <= color_bullet_0[23:16];
+							Green <= color_bullet_0[15:8];
+							Blue <= color_bullet_0[7:0];
 						end
 					end
 					else begin
 						if(bullet_on_B) begin //priority is bullet B
-							Red <= 8'hff;
-							Green <= 8'h00;
-							Blue <= 8'hff;
+							Red <= color_bullet_1[23:16];
+							Green <= color_bullet_1[15:8];
+							Blue <= color_bullet_1[7:0];
 							end
-							else begin //second priority is bullet A
+							else begin //second priority is tank A
 							Red <= color_tank_0[23:16];
 							Green <= color_tank_0[15:8];
 							Blue <= color_tank_0[7:0]; 
@@ -312,23 +323,23 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 			if(ball_on_B) begin//bis on or not
 				if(bullet_on_A)begin
 					if(bullet_on_B) begin //priority is bullet B
-						Red <= 8'hff;
-						Green <= 8'h00;
-						Blue <= 8'hff;
+						Red <= color_bullet_1[23:16];
+						Green <= color_bullet_1[15:8];
+						Blue <= color_bullet_1[7:0];
 					end
 					else begin //second priority is bullet A
-						Red <= 8'hff;
-						Green <= 8'hff;
-						Blue <= 8'h00;
+						Red <= color_bullet_0[23:16];
+						Green <= color_bullet_0[15:8];
+						Blue <= color_bullet_0[7:0];
 					end
 				end
 				else begin
 					if(bullet_on_B) begin //priority is bullet B
-						Red <= 8'hff;
-						Green <= 8'h00;
-						Blue <= 8'hff;
+						Red <= color_bullet_1[23:16];
+						Green <= color_bullet_1[15:8];
+						Blue <= color_bullet_1[7:0];
 					end
-					else begin //second priority is bullet A
+					else begin //second priority is tank B
 						Red <= color_tank_1[23:16];
 						Green <= color_tank_1[15:8];
 						Blue <= color_tank_1[7:0]; 
@@ -338,21 +349,21 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 			else begin
 				if(bullet_on_A)begin
 					if(bullet_on_B) begin //priority is bullet B
-						Red <= 8'hff;
-						Green <= 8'h00;
-						Blue <= 8'hff;
+						Red <= color_bullet_1[23:16];
+						Green <= color_bullet_1[15:8];
+						Blue <= color_bullet_1[7:0];
 					end
 					else begin //second priority is bullet A
-						Red <= 8'hff;
-						Green <= 8'hff;
-						Blue <= 8'h00;
+						Red <= color_bullet_0[23:16];
+						Green <= color_bullet_0[15:8];
+						Blue <= color_bullet_0[7:0];
 					end
 				end
 				else begin
 					if(bullet_on_B) begin //priority is bullet B
-						Red <= 8'hff;
-						Green <= 8'h00;
-						Blue <= 8'hff;
+						Red <= color_bullet_1[23:16];
+						Green <= color_bullet_1[15:8];
+						Blue <= color_bullet_1[7:0];
 						end
 						else begin //second priority is bullet A
 						Red <= 8'h7f - DrawX[9:3];

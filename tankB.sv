@@ -7,7 +7,7 @@ module  tankB ( input Reset, frame_clk,
 					output [9:0] y_component);
     
     logic [9:0] Tank_X_Pos, Tank_X_Motion, Tank_Y_Pos, Tank_Y_Motion, Tank_Size;
-	 logic shootFlag;
+	 logic shootFlag, adjustFlag;
 	 //logic [4:0] y_component;
 	 
     parameter [9:0] Tank_X_Center=500;  // Center position on the X axis
@@ -54,6 +54,7 @@ module  tankB ( input Reset, frame_clk,
 				 
 				 case (keycode)
 					8'h0d : begin
+								adjustFlag <= 1'b1;
 								Direction <= 0;
 								if ( (Tank_X_Pos - Tank_Size) <= Tank_X_Min )  // Ball is at the Left edge, BOUNCE!
 									Tank_X_Motion <= Tank_X_Step;
@@ -65,6 +66,7 @@ module  tankB ( input Reset, frame_clk,
 							  end
 					        
 					8'h0f : begin
+								adjustFlag <= 1'b1;
 								Direction <= 1;
 							  if ( (Tank_X_Pos + Tank_Size) >= Tank_X_Max )  // Ball is at the Right edge, BOUNCE!
 									Tank_X_Motion <= (~ (Tank_X_Step) + 1'b1);  // 2's complement.
@@ -76,12 +78,9 @@ module  tankB ( input Reset, frame_clk,
 							  
 					8'h0e : begin
 								
-								if(shootFlag == 1'b0)begin
-									y_component <= y_component + 1;
-									shootFlag = 1'b0;
-								end
-								else begin
-									y_component <= y_component;
+								if(adjustFlag == 1'b1)begin
+									adjustFlag <= 1'b0;
+									y_component <= y_component + 3;
 								end
 								
 							  //Direction <= 2;
@@ -94,13 +93,11 @@ module  tankB ( input Reset, frame_clk,
 							  
 					8'h0c : begin
 								
-							  if(shootFlag == 1'b0)begin
-									y_component <= y_component - 1;
-									shootFlag = 1'b0;
-							  end
-							  else begin
-							   	y_component <= y_component;
-							  end
+							  
+								if(adjustFlag == 1'b1)begin
+									adjustFlag <= 1'b0;
+									y_component <= y_component - 3;
+								end
 								
 							  //Direction <= 3;
 							  if ( (Tank_Y_Pos - Tank_Size) <= Tank_Y_Min )  // Ball is at the top edge, BOUNCE!
@@ -114,7 +111,7 @@ module  tankB ( input Reset, frame_clk,
 							 
 					
 					8'h13 : begin //reload
-								
+								adjustFlag <= 1'b1;
 							  shootFlag <= 1'b0;
 							  
 							 end
@@ -124,6 +121,7 @@ module  tankB ( input Reset, frame_clk,
 					
 					
 					8'h28 : begin
+								adjustFlag <= 1'b1;
 								if (shootFlag == 1'b1)begin
 									shoot <= 0;
 								end

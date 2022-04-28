@@ -3,6 +3,7 @@ module bulletA(input [9:0] y_component,
 				   input [9:0]  TankX, TankY,
 					input shoot,
 					input [1:0] Direction,
+					input [1:0] currentTank,
 					output transparent,
 					output [9:0] BulletX,
 					output [9:0] BulletY);
@@ -86,13 +87,13 @@ module bulletA(input [9:0] y_component,
 				else if(shoot == 0) begin
 					case (Direction)
 							2'b00 : begin
-										Bullet_X_Motion <= -5;//A
+										Bullet_X_Motion <= -7 - (2*currentTank);//A
 										//Bullet_Y_Change <= -4;
 																											
 										
 									  end
 							2'b01 : begin
-										Bullet_X_Motion <= 5;//A
+										Bullet_X_Motion <= 7 + (2*currentTank);//A
 										//Bullet_Y_Change <= -4;
 										
 									  end

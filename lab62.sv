@@ -185,12 +185,12 @@ logic [1:0] currTank_A, currTank_B;
 	
 	bulletA bullA(.frame_clk(VGA_VS), .Reset(Reset_h), 
 					.TankX(tankAxsig), .TankY(tankAysig), 
-					.shoot(shootAsig), .Direction(dirAsig), .transparent(transig), 
+					.shoot(shootAsig), .Direction(dirAsig), .currentTank(currTank_A), .transparent(transig), 
 					.BulletX(bulletAxsig), .BulletY(bulletAysig), .y_component(y_component_sig_A));
 					
 	bulletA bullB(.frame_clk(VGA_VS), .Reset(Reset_h), 
 					.TankX(tankBxsig), .TankY(tankBysig), 
-					.shoot(shootBsig), .Direction(dirBsig), .transparent(transig), 
+					.shoot(shootBsig), .Direction(dirBsig), .currentTank(currTank_B), .transparent(transig), 
 					.BulletX(bulletBxsig), .BulletY(bulletBysig), .y_component(y_component_sig_B));
 
 
