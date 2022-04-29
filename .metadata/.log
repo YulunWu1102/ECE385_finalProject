@@ -4551,3 +4551,105 @@ javax.net.ssl.SSLHandshakeException: Received fatal alert: handshake_failure
 
 !ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 13:03:25.385
 !MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 13:23:43.081
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 13:23:45.390
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 13:34:41.830
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 13:34:44.061
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 13:42:20.601
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 13:42:22.842
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 14:14:00.064
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 14:14:02.367
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 14:28:31.923
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 14:28:34.173
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 14:39:40.400
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 14:39:42.644
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 14:49:27.837
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 14:49:31.969
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 15:09:52.462
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 15:09:54.688
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 15:20:04.278
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 15:20:06.500
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 20:01:54.975
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 20:01:57.311
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 20:11:04.159
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 20:11:06.445
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 20:25:36.665
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 20:25:39.162
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 20:41:22.809
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 20:41:25.279
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 20:42:20.628
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 20:42:23.042
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 21:04:09.144
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 21:04:11.431
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 21:33:18.330
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 21:33:20.526
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 21:58:53.545
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --stop --accept-bad-sysid --sidp=0x1e0]
+
+!ENTRY com.altera.sbtgui.launch 1 0 2022-04-28 21:58:55.914
+!MESSAGE Executing: [C:/intelfpga_lite/18.1/quartus\bin64\cygwin\bin\bash.exe, -c, nios2-download '--cable=USB-Blaster on localhost [USB-0]' --device=1 --instance=0 --go --accept-bad-sysid --sidp=0x1e0 /cygdrive/d/UIUC/ECE385_tempworkspace/finalProject/software/tankStars/tankStars.elf]

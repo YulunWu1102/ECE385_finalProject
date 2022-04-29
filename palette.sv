@@ -22,6 +22,7 @@ module palette(input[3:0] colorIdx,
   assign local_Palette[15] = 24'h272233;
 		
 		
+		
 		always_comb begin
 			rgbVal = local_Palette[colorIdx];
 			

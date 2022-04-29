@@ -27,8 +27,8 @@ module  tankB ( input Reset, frame_clk,
         begin 
             Tank_Y_Motion <= 10'd0; //Ball_Y_Step;
 				Tank_X_Motion <= 10'd0; //Ball_X_Step;
-				Tank_Y_Pos <= Tank_Y_Center;
 				Tank_X_Pos <= Tank_X_Center;
+				Tank_Y_Pos <= 607*(Tank_X_Center**2)/1562500 - 71*Tank_X_Center/500 + 267 - 45;
 				shootFlag <= 1'b0;
 				shoot <= 1'b0;
 				y_component <= 9'd0;
@@ -112,7 +112,7 @@ module  tankB ( input Reset, frame_clk,
 					
 					8'h13 : begin //reload
 								adjustFlag <= 1'b1;
-							  shootFlag <= 1'b0;
+								shootFlag <= 1'b0;
 							  
 							 end
 							 
@@ -139,8 +139,8 @@ module  tankB ( input Reset, frame_clk,
 					end
 			   endcase
 				 
-				 Tank_Y_Pos <= (Tank_Y_Pos + Tank_Y_Motion);  // Update ball position
 				 Tank_X_Pos <= (Tank_X_Pos + Tank_X_Motion);
+				 Tank_Y_Pos <= 607*(Tank_X_Pos**2)/1562500 - 71*Tank_X_Pos/500 + 267 - 45;
 			
 			
 

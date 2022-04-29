@@ -91,9 +91,35 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	 
 	//important trY::::::::::::::::::::::::::::::::: ROTATION MATRIX CALCULATION FOR TANK A :::::::::::::::::::::::::::::::::
 	int TankA_End_Y;
-	int TankA_delta_Y;
+	int TankA_delta_Y_temp;
+	logic [5:0] TankA_delta_Y;
 	assign TankA_End_Y = 607*((TankX_A+65)**2)/1562500 - 71*TankX_A/500 + 267 - 45;
-	assign TankA_delta_Y = TankA_End_Y - TankY_A;
+	assign TankA_delta_Y_temp = TankA_End_Y - TankY_A;
+	always_ff @(posedge VGA_Clk or posedge Reset)begin
+		if(Reset)begin
+			TankA_delta_Y <= 0;
+		end
+		else begin
+			if(TankA_delta_Y_temp < 0) TankA_delta_Y<=0;
+			if((TankA_delta_Y_temp > 0) & (TankA_delta_Y_temp < 2)) TankA_delta_Y<=1;
+			if((TankA_delta_Y_temp >= 2) & (TankA_delta_Y_temp < 4)) TankA_delta_Y<=3;
+			if((TankA_delta_Y_temp >= 4) & (TankA_delta_Y_temp < 6)) TankA_delta_Y<=5;
+			if((TankA_delta_Y_temp >= 6) & (TankA_delta_Y_temp < 8)) TankA_delta_Y<=7;
+			if((TankA_delta_Y_temp >= 8) & (TankA_delta_Y_temp < 10)) TankA_delta_Y<=9;
+			if((TankA_delta_Y_temp >= 10) & (TankA_delta_Y_temp < 12)) TankA_delta_Y<=11;
+			if((TankA_delta_Y_temp >= 12) & (TankA_delta_Y_temp < 14)) TankA_delta_Y<=13;
+			if((TankA_delta_Y_temp >= 14) & (TankA_delta_Y_temp < 16)) TankA_delta_Y<=15;
+			if((TankA_delta_Y_temp >= 16) & (TankA_delta_Y_temp < 18)) TankA_delta_Y<=17;
+			if((TankA_delta_Y_temp >= 18) & (TankA_delta_Y_temp < 20)) TankA_delta_Y<=19;	
+			if((TankA_delta_Y_temp >= 20) & (TankA_delta_Y_temp < 20)) TankA_delta_Y<=21;
+			if((TankA_delta_Y_temp >= 22) & (TankA_delta_Y_temp < 24)) TankA_delta_Y<=23;	
+			if((TankA_delta_Y_temp >= 24) & (TankA_delta_Y_temp < 26)) TankA_delta_Y<=25;	
+			if((TankA_delta_Y_temp >= 26) & (TankA_delta_Y_temp < 28)) TankA_delta_Y<=27;	
+			if((TankA_delta_Y_temp >= 28)) TankA_delta_Y<=29;
+		end
+		
+	
+	end
 	//Rotation Matrix: 
 	//x' = x*cos(a) -y*sin(a), y' = x*sin(a)+y*cos(a)
 	//small angle theorem: tan(a) = a = TankA_delta_Y / Length
@@ -101,48 +127,102 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	//sin(a) = (2tan(a/2))/(1+tan^2(a/2)) = (4*TankA_delta_Y*L)/(4*(L**2)+(TankA_delta_Y**2))
 	int TankA_Rotate_X, TankA_Rotate_Y;
 	always_comb begin
-		TankA_Rotate_X = DistX_A*(4*(70**2)-(TankA_delta_Y**2))/(4*(70**2)+(TankA_delta_Y**2))+DistY_A*(4*TankA_delta_Y*70)/(4*(70**2)+(TankA_delta_Y**2));
-		TankA_Rotate_Y = DistY_A*(4*(70**2)-(TankA_delta_Y**2))/(4*(70**2)+(TankA_delta_Y**2))-DistX_A*(4*TankA_delta_Y*70)/(4*(70**2)+(TankA_delta_Y**2));
-		
-		if(TankA_Rotate_X > 70) TankA_Rotate_X = 70;
+		TankA_Rotate_X = DistX_A*(4*(100**2)-(TankA_delta_Y**2))/(4*(100**2)+(TankA_delta_Y**2))+DistY_A*(4*TankA_delta_Y*70)/(4*(100**2)+(TankA_delta_Y**2));
+		TankA_Rotate_Y = DistY_A*(4*(100**2)-(TankA_delta_Y**2))/(4*(100**2)+(TankA_delta_Y**2))-DistX_A*(4*TankA_delta_Y*70)/(4*(100**2)+(TankA_delta_Y**2));
+			
+		if(TankA_Rotate_X > 100) TankA_Rotate_X = 100;
 		else begin
 			if(TankA_Rotate_X < 0) TankA_Rotate_X = 0;
 			else begin
 				TankA_Rotate_X = TankA_Rotate_X;
 			end		
-		end
-		
-		if(TankA_Rotate_Y > 50) TankA_Rotate_X = 50;
+		end		
+		if(TankA_Rotate_Y > 80) TankA_Rotate_Y = 80;
 		else begin
-			if(TankA_Rotate_X < 0) TankA_Rotate_X = 0;
+			if(TankA_Rotate_Y < 0) TankA_Rotate_Y = 0;
 			else begin
-				TankA_Rotate_X = TankA_Rotate_X;
+				TankA_Rotate_Y = TankA_Rotate_Y;
 			end		
-		end
-	
+		end	
 	end
 	
+	
+	
+	
+	
+	  
+	//important trY::::::::::::::::::::::::::::::::: ROTBTION MBTRIX CBLCULBTION FOR TANK B :::::::::::::::::::::::::::::::::
+	int TankB_End_Y;
+	int TankB_delta_Y_temp;
+	logic [5:0] TankB_delta_Y;
+	assign TankB_End_Y = 607*((TankX_B+65)**2)/1562500 - 71*TankX_B/500 + 267 - 45;
+	assign TankB_delta_Y_temp = TankB_End_Y - TankY_B;
+	always_ff @(posedge VGA_Clk or posedge Reset)begin
+		if(Reset)begin
+			TankB_delta_Y <= 0;
+		end
+		else begin
+			if(TankB_delta_Y_temp < 0) TankB_delta_Y<=0;
+			if((TankB_delta_Y_temp > 0) & (TankB_delta_Y_temp < 2)) TankB_delta_Y<=1;
+			if((TankB_delta_Y_temp >= 2) & (TankB_delta_Y_temp < 4)) TankB_delta_Y<=3;
+			if((TankB_delta_Y_temp >= 4) & (TankB_delta_Y_temp < 6)) TankB_delta_Y<=5;
+			if((TankB_delta_Y_temp >= 6) & (TankB_delta_Y_temp < 8)) TankB_delta_Y<=7;
+			if((TankB_delta_Y_temp >= 8) & (TankB_delta_Y_temp < 10)) TankB_delta_Y<=9;
+			if((TankB_delta_Y_temp >= 10) & (TankB_delta_Y_temp < 12)) TankB_delta_Y<=11;
+			if((TankB_delta_Y_temp >= 12) & (TankB_delta_Y_temp < 14)) TankB_delta_Y<=13;
+			if((TankB_delta_Y_temp >= 14) & (TankB_delta_Y_temp < 16)) TankB_delta_Y<=15;
+			if((TankB_delta_Y_temp >= 16) & (TankB_delta_Y_temp < 18)) TankB_delta_Y<=17;
+			if((TankB_delta_Y_temp >= 18) & (TankB_delta_Y_temp < 20)) TankB_delta_Y<=19;	
+			if((TankB_delta_Y_temp >= 20) & (TankB_delta_Y_temp < 20)) TankB_delta_Y<=21;
+			if((TankB_delta_Y_temp >= 22) & (TankB_delta_Y_temp < 24)) TankB_delta_Y<=23;	
+			if((TankB_delta_Y_temp >= 24) & (TankB_delta_Y_temp < 26)) TankB_delta_Y<=25;	
+			if((TankB_delta_Y_temp >= 26) & (TankB_delta_Y_temp < 28)) TankB_delta_Y<=27;	
+			if((TankB_delta_Y_temp >= 28)) TankB_delta_Y<=29;
+		end
+	end
+
+	int TankB_Rotate_X, TankB_Rotate_Y;
+	always_comb begin
+		TankB_Rotate_X = DistX_B*(4*(100**2)-(TankB_delta_Y**2))/(4*(100**2)+(TankB_delta_Y**2))+DistY_B*(4*TankB_delta_Y*70)/(4*(100**2)+(TankB_delta_Y**2));
+		TankB_Rotate_Y = DistY_B*(4*(100**2)-(TankB_delta_Y**2))/(4*(100**2)+(TankB_delta_Y**2))-DistX_B*(4*TankB_delta_Y*70)/(4*(100**2)+(TankB_delta_Y**2));
+			
+		if(TankB_Rotate_X > 100) TankB_Rotate_X = 100;
+		else begin
+			if(TankB_Rotate_X < 0) TankB_Rotate_X = 0;
+			else begin
+				TankB_Rotate_X = TankB_Rotate_X;
+			end		
+		end		
+		if(TankB_Rotate_Y > 80) TankB_Rotate_Y = 80;
+		else begin
+			if(TankB_Rotate_Y < 0) TankB_Rotate_Y = 0;
+			else begin
+				TankB_Rotate_Y = TankB_Rotate_Y;
+			end		
+		end	
+	end
+	  
 	  
 
 	//-----------------palette on tank_0 (A) -----------------
 	logic [15:0] currentTankADDR_A;
-	assign currentTankADDR_A = (TankA_Rotate_Y * 70) + TankA_Rotate_X;	
-	logic [7:0] colorIdx_tank_A;
+	assign currentTankADDR_A = (TankA_Rotate_Y * 100) + TankA_Rotate_X;	
+	logic [3:0] colorIdx_tank_A;
 	//assign colorIdx = 4'h3;
 	rtank_rom rtk_A( .addr(currentTankADDR_A), .tankSelection(currentTank_A), .data(colorIdx_tank_A), .Direction(Direction_A));
 	logic [23:0] color_tank_0;
-	palette plt_tank_0(.colorIdx(colorIdx_tank_A[7:4]), .rgbVal(color_tank_0));
+	palette plt_tank_0(.colorIdx(colorIdx_tank_A), .rgbVal(color_tank_0));
 	
 	
 	
 	//-----------------palette on tank_1 (B) -----------------
 	logic [15:0] currentTankADDR_B;
-	assign currentTankADDR_B = (DistY_B * 70) + DistX_B;	
-	logic [7:0] colorIdx_tank_B;
+	assign currentTankADDR_B = (TankB_Rotate_Y * 100) + TankB_Rotate_X;	
+	logic [3:0] colorIdx_tank_B;
 	//assign colorIdx = 4'h3;
 	rtank_rom rtk_B( .addr(currentTankADDR_B), .tankSelection(currentTank_B), .data(colorIdx_tank_B), .Direction(Direction_B));
 	logic [23:0] color_tank_1;
-	palette plt_tank_1(.colorIdx(colorIdx_tank_B[7:4]), .rgbVal(color_tank_1));
+	palette plt_tank_1(.colorIdx(colorIdx_tank_B), .rgbVal(color_tank_1));
 
 	
 	
@@ -174,7 +254,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	
 	always_comb
     begin:select_on_proc1
-        if ( (DistX_A <= 70) & (DistY_A <= 50) & (DistX_A >= 0) & (DistY_A >= 0)  ) 
+        if ( (DistX_A <= 100) & (DistY_A <= 80) & (DistX_A >= 0) & (DistY_A >= 0)  ) 
             select_on_A = 1'b1;
         else 
 		  select_on_A = 1'b0;
@@ -184,7 +264,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	  
     always_comb
     begin:Ball_on_proc1
-        if ( (DistX_A <= 70) & (DistY_A <= 50) & (DistX_A >= 0) & (DistY_A >= 0)  ) 
+        if ( (DistX_A <= 100) & (DistY_A <= 80) & (DistX_A >= 0) & (DistY_A >= 0)  ) 
             ball_on_A = 1'b1;
         else 
             ball_on_A = 1'b0;
@@ -202,7 +282,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	
 	  always_comb
     begin:select_on_proc2
-        if ( (DistX_B <= 70) & (DistY_B <= 50) & (DistX_B >= 0) & (DistY_B >= 0)  ) 
+        if ( (DistX_B <= 100) & (DistY_B <= 80) & (DistX_B >= 0) & (DistY_B >= 0)  ) 
             select_on_B = 1'b1;
         else 
 		  select_on_B = 1'b0;
@@ -212,7 +292,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	  
     always_comb
     begin:Ball_on_proc2
-        if ( (DistX_B <= 70) & (DistY_B <= 50) & (DistX_B >= 0) & (DistY_B >= 0)  ) 
+        if ( (DistX_B <= 100) & (DistY_B <= 80) & (DistX_B >= 0) & (DistY_B >= 0)  ) 
             ball_on_B = 1'b1;
         else 
             ball_on_B = 1'b0;
@@ -236,19 +316,29 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 		case (currentState)
 			
 			2'b00	:	begin //selection
-				 if (select_on_A) begin
-				 
+				 if(ball_on_A)begin//A is on or not
+					if(color_tank_0 == 24'hB0B0B0)begin
+						Red <= currBG_RGB[23:16];
+						Green <= currBG_RGB[15:8];
+						Blue <= currBG_RGB[7:0]; 
+					end
+					else begin
 						Red <= color_tank_0[23:16];
 						Green <= color_tank_0[15:8];
-						Blue <= color_tank_0[7:0]; 
-				 
-				 end
+						Blue <= color_tank_0[7:0];
+					end				
+				end
 				 else if (select_on_B) begin
-				 
-					Red <= color_tank_1[23:16];
-					Green <= color_tank_1[15:8];
-					Blue <= color_tank_1[7:0]; 
-					 
+					 if(color_tank_1 == 24'hB0B0B0)begin
+							Red <= currBG_RGB[23:16];
+							Green <= currBG_RGB[15:8];
+							Blue <= currBG_RGB[7:0]; 
+						end
+						else begin
+							Red <= color_tank_1[23:16];
+							Green <= color_tank_1[15:8];
+							Blue <= color_tank_1[7:0];
+						end	 
 				 end
 							
 				else begin
@@ -374,9 +464,30 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 				end					
 			
 			end
-//		
+		
 		end
-//			
+		
+
+//			if(ball_on_A)begin//A is on or not
+//				if(color_tank_0 == 24'hB0B0B0)begin
+//					Red <= 8'h00;
+//					Green <= 8'hff - DrawX[9:3];
+//					Blue <= 8'hff;
+//				end
+//				else begin
+//					Red <= color_tank_0[23:16];
+//					Green <= color_tank_0[15:8];
+//					Blue <= color_tank_0[7:0];
+//				end				
+//			end
+//			else begin
+//				Red <= 8'h00;
+//				Green <= 8'hff - DrawX[9:3];
+//				Blue <= 8'hff;
+//				
+//			end
+//		end
+		
 		default	: begin //over
 		//always_ff @(posedge VGA_Clk or posedge Reset) begin:rendering
 		
