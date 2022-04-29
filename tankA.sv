@@ -1,6 +1,7 @@
 
 module  tankA ( input Reset, frame_clk,
 					input [7:0] keycode,
+					input hit,
                output [9:0]  TankX, TankY, TankS,
 					output [1:0] Direction,
 					output shoot,
@@ -39,6 +40,11 @@ module  tankA ( input Reset, frame_clk,
            
         else 
         begin 
+				 if(hit) HP <= HP-1;
+				 if(HP == 0) begin
+					HP <= 10;
+				 end
+				 
 				 if ( (Tank_Y_Pos + Tank_Size) >= Tank_Y_Max )  // Ball is at the bottom edge, BOUNCE!
 					  Tank_Y_Motion <= (~ (Tank_Y_Step) + 1'b1);  // 2's complement.
 					  
@@ -51,6 +57,7 @@ module  tankA ( input Reset, frame_clk,
 				 else if ( (Tank_X_Pos - Tank_Size) <= Tank_X_Min )  // Ball is at the Left edge, BOUNCE!
 					  Tank_X_Motion <= Tank_X_Step;
 					  
+				 
 				 else 
 					  //Ball_Y_Motion <= Ball_Y_Motion;  // Ball is somewhere in the middle, don't bounce, just keep moving
 					  

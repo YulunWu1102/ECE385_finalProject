@@ -387,7 +387,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 					
 					
 				 if(ball_on_A)begin//A is on or not
-					if(color_tank_0 == 24'hB0B0B0)begin
+					if(color_tank_0 == 24'hFF00FF)begin
 						Red <= currBG_RGB[23:16];
 						Green <= currBG_RGB[15:8];
 						Blue <= currBG_RGB[7:0]; 
@@ -400,7 +400,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 				end
 				
 				if (select_on_B) begin
-					 if(color_tank_1 == 24'hB0B0B0)begin
+					 if(color_tank_1 == 24'hFF00FF)begin
 							Red <= currBG_RGB[23:16];
 							Green <= currBG_RGB[15:8];
 							Blue <= currBG_RGB[7:0]; 
@@ -430,7 +430,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 			
 			
 			   if(ball_on_A)begin//A is on or not
-					if(color_tank_0 == 24'hB0B0B0)begin
+					if(color_tank_0 == 24'hFF00FF)begin
 						Red <= currBG_RGB[23:16];
 						Green <= currBG_RGB[15:8];
 						Blue <= currBG_RGB[7:0]; 
@@ -443,7 +443,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 				end
 				
 				if (ball_on_B) begin
-					 if(color_tank_1 == 24'hB0B0B0)begin
+					 if(color_tank_1 == 24'hFF00FF)begin
 							Red <= currBG_RGB[23:16];
 							Green <= currBG_RGB[15:8];
 							Blue <= currBG_RGB[7:0]; 
@@ -456,12 +456,12 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 				 end
 				
 				if(bullet_on_A) begin
-					if(color_bullet_0 == 24'hB0B0B0)begin
+					if(color_bullet_0 == 24'hFF00FF)begin
 						Red <= currBG_RGB[23:16];
 						Green <= currBG_RGB[15:8];
 						Blue <= currBG_RGB[7:0]; 
 						if(ball_on_A) begin                           //use draw tank B block
-							if(color_tank_0 == 24'hB0B0B0)begin
+							if(color_tank_0 == 24'hFF00FF)begin
 								Red <= currBG_RGB[23:16];
 								Green <= currBG_RGB[15:8];
 								Blue <= currBG_RGB[7:0]; 
@@ -474,7 +474,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 						end
 						
 						if (ball_on_B) begin                           //use draw tank B block
-							 if(color_tank_1 == 24'hB0B0B0)begin
+							 if(color_tank_1 == 24'hFF00FF)begin
 									Red <= currBG_RGB[23:16];
 									Green <= currBG_RGB[15:8];
 									Blue <= currBG_RGB[7:0]; 
@@ -500,12 +500,12 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 					
 					
 				if(bullet_on_B) begin
-					if(color_bullet_1 == 24'hB0B0B0)begin
+					if(color_bullet_1 == 24'hFF00FF)begin
 						Red <= currBG_RGB[23:16];
 						Green <= currBG_RGB[15:8];
 						Blue <= currBG_RGB[7:0]; 
 						if(ball_on_A) begin                           //use draw tank B block
-							if(color_tank_0 == 24'hB0B0B0)begin
+							if(color_tank_0 == 24'hFF00FF)begin
 								Red <= currBG_RGB[23:16];
 								Green <= currBG_RGB[15:8];
 								Blue <= currBG_RGB[7:0]; 
@@ -518,7 +518,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 						end
 						
 						if (ball_on_B) begin                           //use draw tank B block
-							 if(color_tank_1 == 24'hB0B0B0)begin
+							 if(color_tank_1 == 24'hFF00FF)begin
 									Red <= currBG_RGB[23:16];
 									Green <= currBG_RGB[15:8];
 									Blue <= currBG_RGB[7:0]; 
@@ -545,29 +545,29 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 			
 			
 				if(HP_on_A)begin
-					if(color_hp_0 == 24'hB0B0B0)begin
+					if(color_hp_0 == 24'hFF00FF)begin
 						Red <= currBG_RGB[23:16];
 						Green <= currBG_RGB[15:8];
 						Blue <= currBG_RGB[7:0]; 
 					end
 					else begin
-						Red <= 0;
-						Green <= 8'hff;
-						Blue <= 0;
+						Red <= color_hp_0[23:16];
+						Green <= color_hp_0[15:8];
+						Blue <= color_hp_0[7:0];
 					end	
 				end
 				
 				
 				if(HP_on_B)begin
-					if(color_hp_1 == 24'hB0B0B0)begin
+					if(color_hp_1 == 24'hFF00FF)begin
 						Red <= currBG_RGB[23:16];
 						Green <= currBG_RGB[15:8];
 						Blue <= currBG_RGB[7:0]; 
 					end
 					else begin
-						Red <= 8'hff;
-						Green <= 0;
-						Blue <= 0;
+						Red <= color_hp_1[23:16];
+						Green <= color_hp_1[15:8];
+						Blue <= color_hp_1[7:0];
 					end	
 				end
 				

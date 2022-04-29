@@ -1,6 +1,7 @@
 
 module  tankB ( input Reset, frame_clk,
 					input [7:0] keycode,
+					input hit,
                output [9:0]  TankX, TankY, TankS,
 					output [1:0] Direction,
 					output shoot,
@@ -38,6 +39,11 @@ module  tankB ( input Reset, frame_clk,
            
         else 
         begin 
+				 if(hit) HP <= HP-1;
+				 if(HP == 0) begin
+					HP <= 10;
+				 end
+				 
 				 if ( (Tank_Y_Pos + Tank_Size) >= Tank_Y_Max )  // Ball is at the bottom edge, BOUNCE!
 					  Tank_Y_Motion <= (~ (Tank_Y_Step) + 1'b1);  // 2's complement.
 					  

@@ -64,6 +64,7 @@ logic [1:0] currState, currTank;
 logic [9:0] y_component_sig_A, y_component_sig_B;
 logic [1:0] currTank_A, currTank_B;
 logic [3:0] HP_A, HP_B;
+logic 		hit_A, hit_B;
 //=======================================================
 //  REG/WIRE declarations
 //=======================================================
@@ -185,26 +186,28 @@ logic [3:0] HP_A, HP_B;
 	
 	
 	bulletA bullA(.frame_clk(VGA_VS), .Reset(Reset_h), 
-					.TankX(tankAxsig), .TankY(tankAysig), 
+					.TankX(tankAxsig), .TankY(tankAysig), .TankX_enemy(tankBxsig), .TankY_enemy(tankBysig), 
 					.shoot(shootAsig), .Direction(dirAsig), .currentTank(currTank_A), .transparent(transig), 
-					.BulletX(bulletAxsig), .BulletY(bulletAysig), .y_component(y_component_sig_A));
+					.BulletX(bulletAxsig), .BulletY(bulletAysig), .y_component(y_component_sig_A),
+					.hit(hit_B),);
 					
 	bulletA bullB(.frame_clk(VGA_VS), .Reset(Reset_h), 
-					.TankX(tankBxsig), .TankY(tankBysig), 
+					.TankX(tankBxsig), .TankY(tankBysig), .TankX_enemy(tankAxsig), .TankY_enemy(tankAysig), 
 					.shoot(shootBsig), .Direction(dirBsig), .currentTank(currTank_B), .transparent(transig), 
-					.BulletX(bulletBxsig), .BulletY(bulletBysig), .y_component(y_component_sig_B));
+					.BulletX(bulletBxsig), .BulletY(bulletBysig), .y_component(y_component_sig_B),
+					.hit(hit_A),);
 
 
 					
 					
 					
-	tankA tA(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode),
+	tankA tA(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), .hit(hit_A),
 			   .TankX(tankAxsig), .TankY(tankAysig), .TankS(tankAsizesig), 
 				.Direction(dirAsig), .shoot(shootAsig), .y_component(y_component_sig_A),
 				.HP(HP_A));
 				
 				
-	tankB tB(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode),
+	tankB tB(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), .hit(hit_B),
 			   .TankX(tankBxsig), .TankY(tankBysig), .TankS(tankAsizesig), 
 				.Direction(dirBsig), .shoot(shootBsig), .y_component(y_component_sig_B),
 				.HP(HP_B));
