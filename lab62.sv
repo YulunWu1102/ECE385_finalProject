@@ -63,6 +63,7 @@ logic nextStateSig;
 logic [1:0] currState, currTank;
 logic [9:0] y_component_sig_A, y_component_sig_B;
 logic [1:0] currTank_A, currTank_B;
+logic [3:0] HP_A, HP_B;
 //=======================================================
 //  REG/WIRE declarations
 //=======================================================
@@ -199,12 +200,14 @@ logic [1:0] currTank_A, currTank_B;
 					
 	tankA tA(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode),
 			   .TankX(tankAxsig), .TankY(tankAysig), .TankS(tankAsizesig), 
-				.Direction(dirAsig), .shoot(shootAsig), .y_component(y_component_sig_A));
+				.Direction(dirAsig), .shoot(shootAsig), .y_component(y_component_sig_A),
+				.HP(HP_A));
 				
 				
 	tankB tB(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode),
 			   .TankX(tankBxsig), .TankY(tankBysig), .TankS(tankAsizesig), 
-				.Direction(dirBsig), .shoot(shootBsig), .y_component(y_component_sig_B));
+				.Direction(dirBsig), .shoot(shootBsig), .y_component(y_component_sig_B),
+				.HP(HP_B));
 					
 				
 				
@@ -221,6 +224,7 @@ logic [1:0] currTank_A, currTank_B;
 								              .DrawY(drawysig) );   // vertical coordinate
 
 	color_mapper c(.VGA_Clk(VGA_Clk), .Reset(Reset_h),
+						.HP_A(HP_A), .HP_B(HP_B),
 						.TankX_A(tankAxsig), .TankY_A(tankAysig), .BulletX_A(bulletAxsig), .BulletY_A(bulletAysig), .Direction_A(dirAsig),
 						.TankX_B(tankBxsig), .TankY_B(tankBysig), .BulletX_B(bulletBxsig), .BulletY_B(bulletBysig), .Direction_B(dirBsig),
 						.DrawX(drawxsig), .DrawY(drawysig), .Ball_size(tankAsizesig), .transparent(transig), 

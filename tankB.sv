@@ -4,7 +4,8 @@ module  tankB ( input Reset, frame_clk,
                output [9:0]  TankX, TankY, TankS,
 					output [1:0] Direction,
 					output shoot,
-					output [9:0] y_component);
+					output [9:0] y_component,
+					output [3:0] HP);
     
     logic [9:0] Tank_X_Pos, Tank_X_Motion, Tank_Y_Pos, Tank_Y_Motion, Tank_Size;
 	 logic shootFlag, adjustFlag;
@@ -32,6 +33,7 @@ module  tankB ( input Reset, frame_clk,
 				shootFlag <= 1'b0;
 				shoot <= 1'b0;
 				y_component <= 9'd0;
+				HP <= 10;
         end
            
         else 

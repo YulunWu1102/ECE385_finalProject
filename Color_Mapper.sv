@@ -10,6 +10,7 @@
 
 
 module  color_mapper ( input logic			VGA_Clk, Reset,
+							  input 			[3:0] HP_A, HP_B,
 							  input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A, DrawX, DrawY, Ball_size,
 							  input 			[1:0] Direction_A,
 							  input        [9:0] TankX_B, TankY_B, BulletX_B, BulletY_B, 
@@ -20,11 +21,14 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 							  output 		[15:0] vga_port_local_addr,
 							  output logic [7:0]  Red, Green, Blue );
     
-    logic ball_on_A, bullet_on_A, select_on_A;
-	 logic ball_on_B, bullet_on_B, select_on_B;
+    logic ball_on_A, bullet_on_A, select_on_A, HP_on_A;
+	 logic ball_on_B, bullet_on_B, select_on_B, HP_on_B;
 	 logic [7:0] currData;
 	 logic [4:0] currBGIdx;
 	 logic [23:0] currBG_RGB;
+	 
+	 
+	 
 	 //-----------------calculate the background address to feed to OCM-----------------
 	 assign vga_port_local_addr = ((DrawY / 2) * 320 + DrawX / 2)/2;
 	 
@@ -42,12 +46,18 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	 
 	 
 		
-	 //-----------------calculate co-ord to tank-----------------
-    int DistX_A, DistY_A, DistX_B, DistY_B;
-	 assign DistX_A = DrawX - TankX_A;
-    assign DistY_A = DrawY - TankY_A;
-	 assign DistX_B = DrawX - TankX_B;
-    assign DistY_B = DrawY - TankY_B;
+	 //-----------------calculate co-ord to HP-----------------
+	 logic [9:0] HPX_A, HPY_A, HPX_B, HPY_B; 
+	 assign HPX_A = 80;
+	 assign HPY_A = 80;
+	 assign HPX_B = 490;
+	 assign HPY_B = 80;
+	 
+    int HP_DistX_A, HP_DistY_A, HP_DistX_B, HP_DistY_B;
+	 assign HP_DistX_A = DrawX - HPX_A;
+    assign HP_DistY_A = DrawY - HPY_A;
+	 assign HP_DistX_B = DrawX - HPX_B;
+    assign HP_DistY_B = DrawY - HPY_B;
     
 	 
 	 //-----------------calculate co-ord to bullet-----------------
@@ -57,6 +67,15 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	 assign Bullet_DistX_B = DrawX - BulletX_B;
     assign Bullet_DistY_B = DrawY - BulletY_B;
     assign Size = 4;
+	 
+	 
+	 //-----------------calculate co-ord to tank-----------------
+    int DistX_A, DistY_A, DistX_B, DistY_B;
+	 assign DistX_A = DrawX - TankX_A;
+    assign DistY_A = DrawY - TankY_A;
+	 assign DistX_B = DrawX - TankX_B;
+    assign DistY_B = DrawY - TankY_B;
+	 
 	 
 	 
 	 
@@ -203,6 +222,28 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	end
 	  
 	  
+	  
+	  
+	//-----------------palette on HP_A -----------------
+	logic [13:0] currentHPADDR_A;
+	assign currentHPADDR_A = (HP_DistY_A * 70) + HP_DistX_A;	
+	logic [7:0] colorIdx_HP_A;
+	hp_rom hp_A( .addr(currentHPADDR_A), .HPSelection(HP_A), .data(colorIdx_HP_A));
+	logic [23:0] color_hp_0;
+	palette plt_hp_0(.colorIdx(colorIdx_HP_A[7:4]), .rgbVal(color_hp_0));  
+	
+	
+	//-----------------palette on HP_B -----------------
+	logic [13:0] currentHPADDR_B;
+	assign currentHPADDR_B = (HP_DistY_B * 70) + HP_DistX_B;	
+	logic [7:0] colorIdx_HP_B;
+	hp_rom hp_B( .addr(currentHPADDR_B), .HPSelection(HP_B), .data(colorIdx_HP_B));
+	logic [23:0] color_hp_1;
+	palette plt_hp_1(.colorIdx(colorIdx_HP_B[7:4]), .rgbVal(color_hp_1));  
+	  
+	  
+	  
+	  
 
 	//-----------------palette on tank_0 (A) -----------------
 	logic [15:0] currentTankADDR_A;
@@ -227,18 +268,21 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	
 	
 	//-----------------palette on bullet (A) -----------------
+	logic [13:0] currentBulletADDR_A;
+	assign currentBulletADDR_A = 20 * Bullet_DistY_A + Bullet_DistX_A;
+	logic [3:0] colorIdx_bullet_A;
+	bullet_rom b0_rom (.addr(currentBulletADDR_A), .tankSelection(currentTank_A), .data(colorIdx_bullet_A));
 	logic [23:0] color_bullet_0;
-	assign color_bullet_0[23:16] = (4-currentTank_A) * 16;
-	assign color_bullet_0[15:8] = currentTank_A * 16;
-	assign color_bullet_0[7:0] = (4-currentTank_A) * 16;
-	
+	palette plt_bullet_0(.colorIdx(colorIdx_bullet_A), .rgbVal(color_bullet_0));
 	
 	
 	//-----------------palette on bullet (B) -----------------
+	logic [13:0] currentBulletADDR_B;
+	assign currentBulletADDR_B = 20 * Bullet_DistY_B + Bullet_DistX_B;
+	logic [3:0] colorIdx_bullet_B;
+	bullet_rom b1_rom (.addr(currentBulletADDR_B), .tankSelection(currentTank_B), .data(colorIdx_bullet_B));
 	logic [23:0] color_bullet_1;
-	assign color_bullet_1[23:16] = (4-currentTank_B) * 16;
-	assign color_bullet_1[15:8] = currentTank_B * 16;
-	assign color_bullet_1[7:0] = (4-currentTank_B) * 16;
+	palette plt_bullet_1(.colorIdx(colorIdx_bullet_B), .rgbVal(color_bullet_1));
 	
 
 	
@@ -252,6 +296,8 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 //	palette plt_background_1(.colorIdx(colorIdx_background), .rgbVal(color_background));
 
 	
+	
+	//-----------------------Tank (phase 0) On Signals-----------------------
 	always_comb
     begin:select_on_proc1
         if ( (DistX_A <= 100) & (DistY_A <= 80) & (DistX_A >= 0) & (DistY_A >= 0)  ) 
@@ -259,36 +305,26 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
         else 
 		  select_on_A = 1'b0;
 		end 
-           
+         
+	always_comb
+    begin:select_on_proc2
+        if ( (DistX_B <= 100) & (DistY_B <= 80) & (DistX_B >= 0) & (DistY_B >= 0)  ) 
+            select_on_B = 1'b1;
+        else 
+		  select_on_B = 1'b0;
+		end 		
 	
 	  
+	  
+	//-----------------------Tank (phase 1) On Signals-----------------------
+
     always_comb
     begin:Ball_on_proc1
         if ( (DistX_A <= 100) & (DistY_A <= 80) & (DistX_A >= 0) & (DistY_A >= 0)  ) 
             ball_on_A = 1'b1;
         else 
             ball_on_A = 1'b0;
-     end 
-	  
-	 always_comb
-    begin:Bullet_on_proc1
-        if (( ( Bullet_DistX_A*Bullet_DistX_A + Bullet_DistY_A*Bullet_DistY_A) <= (Size * Size))) 
-            bullet_on_A = 1'b1;
-        else 
-            bullet_on_A = 1'b0;
-     end 
-       
-		 
-	
-	  always_comb
-    begin:select_on_proc2
-        if ( (DistX_B <= 100) & (DistY_B <= 80) & (DistX_B >= 0) & (DistY_B >= 0)  ) 
-            select_on_B = 1'b1;
-        else 
-		  select_on_B = 1'b0;
-		end 
-           
-	
+     end 	
 	  
     always_comb
     begin:Ball_on_proc2
@@ -298,13 +334,42 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
             ball_on_B = 1'b0;
      end 
 	  
+	  
+	 //-----------------------Bullet On Signals-----------------------
+	  
+	 always_comb
+    begin:Bullet_on_proc1
+        if ( (Bullet_DistX_A <= 20) & (Bullet_DistY_A <= 20) & (Bullet_DistX_A >= 0) & (Bullet_DistY_A >= 0)  ) 
+            bullet_on_A = 1'b1;
+        else 
+            bullet_on_A = 1'b0;
+     end 
+	  
 	 always_comb
     begin:Bullet_on_proc2
-        if (( ( Bullet_DistX_B*Bullet_DistX_B + Bullet_DistY_B*Bullet_DistY_B) <= (Size * Size))) 
+        if ( (Bullet_DistX_B <= 20) & (Bullet_DistY_B <= 20) & (Bullet_DistX_B >= 0) & (Bullet_DistY_B >= 0)  ) 
             bullet_on_B = 1'b1;
         else 
             bullet_on_B = 1'b0;
      end 
+	  
+	  
+	  //-----------------------HP On Signals-----------------------
+	  always_comb
+	  begin:hp_on_0
+        if ( (HP_DistX_A <= 70) & (HP_DistY_A <= 20) & (HP_DistX_A >= 0) & (HP_DistY_A >= 0)  ) 
+            HP_on_A = 1'b1;
+        else 
+            HP_on_A = 1'b0;
+     end 
+	  
+	  always_comb
+	  begin:hp_on_1
+        if ( (HP_DistX_B <= 70) & (HP_DistY_B <= 20) & (HP_DistX_B >= 0) & (HP_DistY_B >= 0)  ) 
+            HP_on_B = 1'b1;
+        else 
+            HP_on_B = 1'b0;
+     end
 	
 		 
 		 
@@ -316,6 +381,11 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 		case (currentState)
 			
 			2'b00	:	begin //selection
+				Red <= currBG_RGB[23:16];
+				Green <= currBG_RGB[15:8];
+				Blue <= currBG_RGB[7:0]; 
+					
+					
 				 if(ball_on_A)begin//A is on or not
 					if(color_tank_0 == 24'hB0B0B0)begin
 						Red <= currBG_RGB[23:16];
@@ -328,7 +398,8 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 						Blue <= color_tank_0[7:0];
 					end				
 				end
-				 else if (select_on_B) begin
+				
+				if (select_on_B) begin
 					 if(color_tank_1 == 24'hB0B0B0)begin
 							Red <= currBG_RGB[23:16];
 							Green <= currBG_RGB[15:8];
@@ -341,151 +412,164 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 						end	 
 				 end
 							
-				else begin
-					Red <= currBG_RGB[23:16];
-					Green <= currBG_RGB[15:8];
-					Blue <= currBG_RGB[7:0]; 
-				
-				end
-							
+											
 			
 			end
 			
 			2'b01 : begin //fight color_rtk
+			Red <= currBG_RGB[23:16];
+			Green <= currBG_RGB[15:8];
+			Blue <= currBG_RGB[7:0]; 
+					
 			
 			
-			
-			if(ball_on_A)begin//A is on or not
-				if(ball_on_B) begin//bis on or not
-					if(bullet_on_A)begin
-						if(bullet_on_B) begin //priority is bullet B
-							Red <= color_bullet_1[23:16];
-							Green <= color_bullet_1[15:8];
-							Blue <= color_bullet_1[7:0];
-						end
-						else begin //second priority is bullet A
-							Red <= color_bullet_0[23:16];
-							Green <= color_bullet_0[15:8];
-							Blue <= color_bullet_0[7:0];
-						end
+			   if(ball_on_A)begin//A is on or not
+					if(color_tank_0 == 24'hB0B0B0)begin
+						Red <= currBG_RGB[23:16];
+						Green <= currBG_RGB[15:8];
+						Blue <= currBG_RGB[7:0]; 
 					end
 					else begin
-						if(bullet_on_B) begin //priority is bullet B
-							Red <= color_bullet_1[23:16];
-							Green <= color_bullet_1[15:8];
-							Blue <= color_bullet_1[7:0];
+						Red <= color_tank_0[23:16];
+						Green <= color_tank_0[15:8];
+						Blue <= color_tank_0[7:0];
+					end				
+				end
+				
+				if (ball_on_B) begin
+					 if(color_tank_1 == 24'hB0B0B0)begin
+							Red <= currBG_RGB[23:16];
+							Green <= currBG_RGB[15:8];
+							Blue <= currBG_RGB[7:0]; 
 						end
-						else begin //second priority is tank B
+						else begin
 							Red <= color_tank_1[23:16];
 							Green <= color_tank_1[15:8];
-							Blue <= color_tank_1[7:0]; 
+							Blue <= color_tank_1[7:0];
+						end	 
+				 end
+				
+				if(bullet_on_A) begin
+					if(color_bullet_0 == 24'hB0B0B0)begin
+						Red <= currBG_RGB[23:16];
+						Green <= currBG_RGB[15:8];
+						Blue <= currBG_RGB[7:0]; 
+						if(ball_on_A) begin                           //use draw tank B block
+							if(color_tank_0 == 24'hB0B0B0)begin
+								Red <= currBG_RGB[23:16];
+								Green <= currBG_RGB[15:8];
+								Blue <= currBG_RGB[7:0]; 
+							end
+							else begin
+								Red <= color_tank_0[23:16];
+								Green <= color_tank_0[15:8];
+								Blue <= color_tank_0[7:0];
+							end				
 						end
-					end				
-				end
-				else begin
-					if(bullet_on_A)begin
-						if(bullet_on_B) begin //priority is bullet B
-							Red <= color_bullet_1[23:16];
-							Green <= color_bullet_1[15:8];
-							Blue <= color_bullet_1[7:0];
-						end
-						else begin //second priority is bullet A
+						
+						if (ball_on_B) begin                           //use draw tank B block
+							 if(color_tank_1 == 24'hB0B0B0)begin
+									Red <= currBG_RGB[23:16];
+									Green <= currBG_RGB[15:8];
+									Blue <= currBG_RGB[7:0]; 
+								end
+								else begin
+									Red <= color_tank_1[23:16];
+									Green <= color_tank_1[15:8];
+									Blue <= color_tank_1[7:0];
+								end	 
+						 end			
+					end
+					else begin
 							Red <= color_bullet_0[23:16];
 							Green <= color_bullet_0[15:8];
 							Blue <= color_bullet_0[7:0];
+						 
+					end
+					
+					
+				end
+					
+					
+					
+					
+				if(bullet_on_B) begin
+					if(color_bullet_1 == 24'hB0B0B0)begin
+						Red <= currBG_RGB[23:16];
+						Green <= currBG_RGB[15:8];
+						Blue <= currBG_RGB[7:0]; 
+						if(ball_on_A) begin                           //use draw tank B block
+							if(color_tank_0 == 24'hB0B0B0)begin
+								Red <= currBG_RGB[23:16];
+								Green <= currBG_RGB[15:8];
+								Blue <= currBG_RGB[7:0]; 
+							end
+							else begin
+								Red <= color_tank_0[23:16];
+								Green <= color_tank_0[15:8];
+								Blue <= color_tank_0[7:0];
+							end				
 						end
+						
+						if (ball_on_B) begin                           //use draw tank B block
+							 if(color_tank_1 == 24'hB0B0B0)begin
+									Red <= currBG_RGB[23:16];
+									Green <= currBG_RGB[15:8];
+									Blue <= currBG_RGB[7:0]; 
+								end
+								else begin
+									Red <= color_tank_1[23:16];
+									Green <= color_tank_1[15:8];
+									Blue <= color_tank_1[7:0];
+								end	 
+						 end			
 					end
 					else begin
-						if(bullet_on_B) begin //priority is bullet B
 							Red <= color_bullet_1[23:16];
 							Green <= color_bullet_1[15:8];
 							Blue <= color_bullet_1[7:0];
-							end
-							else begin //second priority is tank A
-							Red <= color_tank_0[23:16];
-							Green <= color_tank_0[15:8];
-							Blue <= color_tank_0[7:0]; 
-						end
-					end				
-				end		
-			end
-			else begin
-			if(ball_on_B) begin//bis on or not
-				if(bullet_on_A)begin
-					if(bullet_on_B) begin //priority is bullet B
-						Red <= color_bullet_1[23:16];
-						Green <= color_bullet_1[15:8];
-						Blue <= color_bullet_1[7:0];
+						 
 					end
-					else begin //second priority is bullet A
-						Red <= color_bullet_0[23:16];
-						Green <= color_bullet_0[15:8];
-						Blue <= color_bullet_0[7:0];
-					end
+					
+					
 				end
-				else begin
-					if(bullet_on_B) begin //priority is bullet B
-						Red <= color_bullet_1[23:16];
-						Green <= color_bullet_1[15:8];
-						Blue <= color_bullet_1[7:0];
+			
+		
+			
+			
+			
+				if(HP_on_A)begin
+					if(color_hp_0 == 24'hB0B0B0)begin
+						Red <= currBG_RGB[23:16];
+						Green <= currBG_RGB[15:8];
+						Blue <= currBG_RGB[7:0]; 
 					end
-					else begin //second priority is tank B
-						Red <= color_tank_1[23:16];
-						Green <= color_tank_1[15:8];
-						Blue <= color_tank_1[7:0]; 
-					end
-				end				
-			end
-			else begin
-				if(bullet_on_A)begin
-					if(bullet_on_B) begin //priority is bullet B
-						Red <= color_bullet_1[23:16];
-						Green <= color_bullet_1[15:8];
-						Blue <= color_bullet_1[7:0];
-					end
-					else begin //second priority is bullet A
-						Red <= color_bullet_0[23:16];
-						Green <= color_bullet_0[15:8];
-						Blue <= color_bullet_0[7:0];
-					end
+					else begin
+						Red <= 0;
+						Green <= 8'hff;
+						Blue <= 0;
+					end	
 				end
-				else begin
-					if(bullet_on_B) begin //priority is bullet B
-						Red <= color_bullet_1[23:16];
-						Green <= color_bullet_1[15:8];
-						Blue <= color_bullet_1[7:0];
-						end
-						else begin //second priority is bullet A
-						Red <= 8'h7f - DrawX[9:3];
-						Green <= 8'h00;
-						Blue <= 8'h00;
-						end
-					end				
-				end					
+				
+				
+				if(HP_on_B)begin
+					if(color_hp_1 == 24'hB0B0B0)begin
+						Red <= currBG_RGB[23:16];
+						Green <= currBG_RGB[15:8];
+						Blue <= currBG_RGB[7:0]; 
+					end
+					else begin
+						Red <= 8'hff;
+						Green <= 0;
+						Blue <= 0;
+					end	
+				end
+			
 			
 			end
 		
-		end
-		
 
-//			if(ball_on_A)begin//A is on or not
-//				if(color_tank_0 == 24'hB0B0B0)begin
-//					Red <= 8'h00;
-//					Green <= 8'hff - DrawX[9:3];
-//					Blue <= 8'hff;
-//				end
-//				else begin
-//					Red <= color_tank_0[23:16];
-//					Green <= color_tank_0[15:8];
-//					Blue <= color_tank_0[7:0];
-//				end				
-//			end
-//			else begin
-//				Red <= 8'h00;
-//				Green <= 8'hff - DrawX[9:3];
-//				Blue <= 8'hff;
-//				
-//			end
+
 //		end
 		
 		default	: begin //over

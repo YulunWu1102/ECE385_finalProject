@@ -11,3 +11,5 @@ Info (10281): Verilog HDL Declaration information at lab62_soc_mm_interconnect_0
 Warning (10273): Verilog HDL warning at lab62_soc_sdram_test_component.v(236): extended using "x" or "z" File: D:/UIUC/ECE385_tempworkspace/finalProject/lab62_soc/synthesis/submodules/lab62_soc_sdram_test_component.v Line: 236
 Warning (10273): Verilog HDL warning at lab62_soc_sdram_test_component.v(237): extended using "x" or "z" File: D:/UIUC/ECE385_tempworkspace/finalProject/lab62_soc/synthesis/submodules/lab62_soc_sdram_test_component.v Line: 237
 Warning (10273): Verilog HDL warning at HexDriver.sv(23): extended using "x" or "z" File: D:/UIUC/ECE385_tempworkspace/finalProject/HexDriver.sv Line: 23
+Info (10281): Verilog HDL Declaration information at Color_Mapper.sv(13): object "HP_A" differs only in case from object "hp_A" in the same scope File: D:/UIUC/ECE385_tempworkspace/finalProject/Color_Mapper.sv Line: 13
+Info (10281): Verilog HDL Declaration information at Color_Mapper.sv(13): object "HP_B" differs only in case from object "hp_B" in the same scope File: D:/UIUC/ECE385_tempworkspace/finalProject/Color_Mapper.sv Line: 13
