@@ -229,9 +229,10 @@ logic [3:0] HP_A, HP_B;
 						.TankX_B(tankBxsig), .TankY_B(tankBysig), .BulletX_B(bulletBxsig), .BulletY_B(bulletBysig), .Direction_B(dirBsig),
 						.DrawX(drawxsig), .DrawY(drawysig), .Ball_size(tankAsizesig), .transparent(transig), 
 						.currentState(currState), .currentTank_A(currTank_A), .currentTank_B(currTank_B),
+						.blank(blank),
 						.Red(Red), .Green(Green), .Blue(Blue),
 						.vga_port_backgrounddata(VGA_BGDATA),        //                vga_port.backgrounddata
-						.vga_port_local_addr(VGA_LOCALADDR) 	);
+						.vga_port_local_addr(VGA_LOCALADDR));
 							  
 
 

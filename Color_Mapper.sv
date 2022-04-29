@@ -15,7 +15,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 							  input 			[1:0] Direction_A,
 							  input        [9:0] TankX_B, TankY_B, BulletX_B, BulletY_B, 
 							  input 			[1:0] Direction_B,
-							  input			transparent,
+							  input			transparent, blank,
 							  input 			[1:0] currentState, currentTank_A,currentTank_B,
 							  input			[7:0]  vga_port_backgrounddata,
 							  output 		[15:0] vga_port_local_addr,
@@ -411,7 +411,13 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 							Blue <= color_tank_1[7:0];
 						end	 
 				 end
-							
+						
+				if(blank == 0)begin
+					Red <= 8'h0;
+					Green <= 8'h0;
+					Blue <= 8'h0;
+				
+				end	
 											
 			
 			end
@@ -563,6 +569,14 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 						Green <= 0;
 						Blue <= 0;
 					end	
+				end
+				
+				
+				if(blank == 0)begin
+					Red <= 8'h0;
+					Green <= 8'h0;
+					Blue <= 8'h0;
+				
 				end
 			
 			
