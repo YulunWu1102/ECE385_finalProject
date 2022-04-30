@@ -1,12 +1,12 @@
-Fitter Status : Successful - Fri Apr 29 12:18:04 2022
+Fitter Status : Successful - Fri Apr 29 20:37:04 2022
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : tankStars
 Top-level Entity Name : lab62
 Family : MAX 10
 Device : 10M50DAF484C7G
 Timing Models : Final
-Total logic elements : 22,809 / 49,760 ( 46 % )
-    Total combinational functions : 22,223 / 49,760 ( 45 % )
+Total logic elements : 23,247 / 49,760 ( 47 % )
+    Total combinational functions : 22,637 / 49,760 ( 45 % )
     Dedicated logic registers : 2,726 / 49,760 ( 5 % )
 Total registers : 2795
 Total pins : 141 / 360 ( 39 % )

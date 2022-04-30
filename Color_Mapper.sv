@@ -15,7 +15,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 							  input 			[1:0] Direction_A,
 							  input        [9:0] TankX_B, TankY_B, BulletX_B, BulletY_B, 
 							  input 			[1:0] Direction_B,
-							  input			transparent, blank,
+							  input			transparent, blank, hit_A, hit_B,
 							  input 			[1:0] currentState, currentTank_A,currentTank_B,
 							  input			[7:0]  vga_port_backgrounddata,
 							  output 		[15:0] vga_port_local_addr,
@@ -268,21 +268,45 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	
 	
 	//-----------------palette on bullet (A) -----------------
+	
+	//======reserve a [23:0]logic for final display value determined in always_ff
+	logic [23:0] color_bullet_final_0;
+	//==================================================================
+	
 	logic [13:0] currentBulletADDR_A;
 	assign currentBulletADDR_A = 20 * Bullet_DistY_A + Bullet_DistX_A;
 	logic [3:0] colorIdx_bullet_A;
 	bullet_rom b0_rom (.addr(currentBulletADDR_A), .tankSelection(currentTank_A), .data(colorIdx_bullet_A));
 	logic [23:0] color_bullet_0;
 	palette plt_bullet_0(.colorIdx(colorIdx_bullet_A), .rgbVal(color_bullet_0));
+	//-------palette on bullet (A): explosion -------
+	logic [3:0] colorIdx_exp_A;
+	exp_rom exp0_rom (.addr(currentBulletADDR_A), .data(colorIdx_exp_A));
+	logic [23:0] color_exp_0;
+	palette plt_exp_0(.colorIdx(colorIdx_exp_A), .rgbVal(color_exp_0));
+	
+	
+	
+	
 	
 	
 	//-----------------palette on bullet (B) -----------------
+	
+	//======reserve a [23:0]logic for final display value determined in always_ff
+	logic [23:0] color_bullet_final_1;
+	//==================================================================
+	
 	logic [13:0] currentBulletADDR_B;
 	assign currentBulletADDR_B = 20 * Bullet_DistY_B + Bullet_DistX_B;
 	logic [3:0] colorIdx_bullet_B;
 	bullet_rom b1_rom (.addr(currentBulletADDR_B), .tankSelection(currentTank_B), .data(colorIdx_bullet_B));
 	logic [23:0] color_bullet_1;
 	palette plt_bullet_1(.colorIdx(colorIdx_bullet_B), .rgbVal(color_bullet_1));
+	//-------palette on bullet (B): explosion -------
+	logic [3:0] colorIdx_exp_B;
+	exp_rom exp1_rom (.addr(currentBulletADDR_B), .data(colorIdx_exp_B));
+	logic [23:0] color_exp_1;
+	palette plt_exp_1(.colorIdx(colorIdx_exp_B), .rgbVal(color_exp_1));
 	
 
 	
@@ -426,7 +450,25 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 			Red <= currBG_RGB[23:16];
 			Green <= currBG_RGB[15:8];
 			Blue <= currBG_RGB[7:0]; 
-					
+				
+				if(hit_B)begin
+					color_bullet_final_0 <= color_exp_0;
+				end
+				else begin
+					color_bullet_final_0 <= color_bullet_0;
+				
+				end
+				
+				
+				if(hit_A)begin
+					color_bullet_final_1 <= color_exp_1;
+				end
+				else begin
+					color_bullet_final_1 <= color_bullet_1;				
+				end
+				
+				
+				
 			
 			
 			   if(ball_on_A)begin//A is on or not
@@ -456,7 +498,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 				 end
 				
 				if(bullet_on_A) begin
-					if(color_bullet_0 == 24'hFF00FF)begin
+					if(color_bullet_final_0 == 24'hFF00FF)begin
 						Red <= currBG_RGB[23:16];
 						Green <= currBG_RGB[15:8];
 						Blue <= currBG_RGB[7:0]; 
@@ -487,9 +529,9 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 						 end			
 					end
 					else begin
-							Red <= color_bullet_0[23:16];
-							Green <= color_bullet_0[15:8];
-							Blue <= color_bullet_0[7:0];
+							Red <= color_bullet_final_0[23:16];
+							Green <= color_bullet_final_0[15:8];
+							Blue <= color_bullet_final_0[7:0];
 						 
 					end
 					
@@ -500,7 +542,7 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 					
 					
 				if(bullet_on_B) begin
-					if(color_bullet_1 == 24'hFF00FF)begin
+					if(color_bullet_final_1 == 24'hFF00FF)begin
 						Red <= currBG_RGB[23:16];
 						Green <= currBG_RGB[15:8];
 						Blue <= currBG_RGB[7:0]; 
@@ -531,9 +573,9 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 						 end			
 					end
 					else begin
-							Red <= color_bullet_1[23:16];
-							Green <= color_bullet_1[15:8];
-							Blue <= color_bullet_1[7:0];
+							Red <= color_bullet_final_1[23:16];
+							Green <= color_bullet_final_1[15:8];
+							Blue <= color_bullet_final_1[7:0];
 						 
 					end
 					

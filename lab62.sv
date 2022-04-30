@@ -230,7 +230,7 @@ logic 		hit_A, hit_B;
 						.HP_A(HP_A), .HP_B(HP_B),
 						.TankX_A(tankAxsig), .TankY_A(tankAysig), .BulletX_A(bulletAxsig), .BulletY_A(bulletAysig), .Direction_A(dirAsig),
 						.TankX_B(tankBxsig), .TankY_B(tankBysig), .BulletX_B(bulletBxsig), .BulletY_B(bulletBysig), .Direction_B(dirBsig),
-						.DrawX(drawxsig), .DrawY(drawysig), .Ball_size(tankAsizesig), .transparent(transig), 
+						.DrawX(drawxsig), .DrawY(drawysig), .Ball_size(tankAsizesig), .transparent(transig), .hit_A(hit_A), .hit_B(hit_B),
 						.currentState(currState), .currentTank_A(currTank_A), .currentTank_B(currTank_B),
 						.blank(blank),
 						.Red(Red), .Green(Green), .Blue(Blue),

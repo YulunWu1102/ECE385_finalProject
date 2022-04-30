@@ -1,9 +1,9 @@
-12:23:12 **** Incremental Build of configuration Nios II for project tankStars ****
+20:50:15 **** Incremental Build of configuration Nios II for project tankStars ****
 make all 
 Info: Building ../tankStars_bsp/
 C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
 [BSP build complete]
 [tankStars build complete]
 
-12:23:13 Build Finished (took 1s.697ms)
+20:50:17 Build Finished (took 1s.759ms)
 
