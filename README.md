@@ -1,0 +1,1 @@
+﻿This git repo is for final Project of ECE 385. The project is a FPGA based “Tank-Stars” game that allows 2 players to participate the game. The play can choose their tank with different property, and they will shoot cannon ball to each other in order to win the game.

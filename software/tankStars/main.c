@@ -137,7 +137,7 @@ int main() {
 
 	printf("start VGA rendering");
 	//VGAColorClr();
-	VGARender();
+	//VGARender();
 
 
 	BYTE rcode;

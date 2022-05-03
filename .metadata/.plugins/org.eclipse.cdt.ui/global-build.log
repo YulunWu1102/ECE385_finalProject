@@ -43,3 +43,52 @@ Info:                 65408 KBytes free for stack + heap.
 Info: Creating tankStars.objdump
 nios2-elf-objdump --disassemble --syms --all-header --source tankStars.elf >tankStars.objdump
 [tankStars build complete]
+01:06:59 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+01:07:12 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+01:07:15 **** Incremental Build of configuration Nios II for project tankStars_bsp ****
+make all 
+[BSP build complete]
+01:07:27 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+[tankStars build complete]
+01:12:30 **** Incremental Build of configuration Nios II for project tankStars ****
+make all 
+Info: Building ../tankStars_bsp/
+C:/intelFPGA_lite/18.1/nios2eds/bin/gnu/H-x86_64-mingw32/bin/make --no-print-directory -C ../tankStars_bsp/
+[BSP build complete]
+Info: Compiling main.c to obj/default/main.o
+nios2-elf-gcc -xc -MP -MMD -c -I../tankStars_bsp//HAL/inc -I../tankStars_bsp/ -I../tankStars_bsp//drivers/inc  -pipe -D__hal__ -DALT_NO_INSTRUCTION_EMULATION -DALT_SINGLE_THREADED    -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o obj/default/main.o main.c
+In file included from main.c:19:0:
+text_mode_vga_color.h:27:48: warning: initialization makes pointer from integer without a cast [-Wint-conversion]
+ static volatile struct BACK_STRUCT* vga_ctrl = 0x20000;
+                                                ^
+main.c: In function 'main':
+main.c:150:8: warning: unused variable 'keycode' [-Wunused-variable]
+   WORD keycode;
+        ^
+In file included from main.c:19:0:
+main.c: At top level:
+text_mode_vga_color.h:27:37: warning: 'vga_ctrl' defined but not used [-Wunused-variable]
+ static volatile struct BACK_STRUCT* vga_ctrl = 0x20000;
+                                     ^
+Info: Linking tankStars.elf
+nios2-elf-g++  -T'../tankStars_bsp//linker.x' -msys-crt0='../tankStars_bsp//obj/HAL/src/crt0.o' -msys-lib=hal_bsp -L../tankStars_bsp/   -Wl,-Map=tankStars.map   -O0 -g -Wall   -mno-hw-div -mno-hw-mul -mno-hw-mulx -mgpopt=global  -o tankStars.elf obj/default/main.o obj/default/text_mode_vga_color.o obj/default/usb_kb/HID.o obj/default/usb_kb/MAX3421E.o obj/default/usb_kb/transfer.o -lm -msys-lib=m
+nios2-elf-insert tankStars.elf --thread_model hal --cpu_name nios2_gen2_0 --qsys true --simulation_enabled false --id 0 --sidp 0x1e0 --timestamp 1650923929 --stderr_dev jtag_uart_0 --stdin_dev jtag_uart_0 --stdout_dev jtag_uart_0 --sopc_system_name lab62_soc --quartus_project_dir "D:/UIUC/ECE385_tempworkspace/finalProject" --jdi ../..//output_files/tankStars.jdi --sopcinfo D:/UIUC/ECE385_tempworkspace/finalProject/software/tankStars_bsp/../../lab62_soc.sopcinfo
+Info: (tankStars.elf) 121 KBytes program size (code + initialized data).
+Info:                 65408 KBytes free for stack + heap.
+Info: Creating tankStars.objdump
+nios2-elf-objdump --disassemble --syms --all-header --source tankStars.elf >tankStars.objdump
+[tankStars build complete]

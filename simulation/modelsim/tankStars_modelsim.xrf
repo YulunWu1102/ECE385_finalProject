@@ -1,5 +1,4 @@
 vendor_name = ModelSim
-source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/gameoverrom.sv
 source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/exprom.sv
 source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/hprom.sv
 source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/bulletrom.sv
@@ -88,8 +87,9 @@ source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/tankB.sv
 source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/tank_selector_B.sv
 source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/OCM_background.qip
 source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/OCM_background.v
-source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/numrom.sv
 source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/timer.sv
+source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/gameoverrom.sv
+source_file = 1, D:/UIUC/ECE385_tempworkspace/finalProject/numrom.sv
 source_file = 1, c:/intelfpga_lite/18.1/quartus/libraries/megafunctions/altsyncram.tdf
 source_file = 1, c:/intelfpga_lite/18.1/quartus/libraries/megafunctions/stratix_ram_block.inc
 source_file = 1, c:/intelfpga_lite/18.1/quartus/libraries/megafunctions/lpm_mux.inc
