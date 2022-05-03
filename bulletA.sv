@@ -97,13 +97,13 @@ module bulletA(input [9:0] y_component,
 				hit <= 0;
 					case (Direction)
 							2'b00 : begin
-										Bullet_X_Motion <= -7 - (2*currentTank);//A
+										Bullet_X_Motion <= -7 - (2*currentTank) + (y_component / 300);//A
 										//Bullet_Y_Change <= -4;
 																											
 										
 									  end
 							2'b01 : begin
-										Bullet_X_Motion <= 7 + (2*currentTank);//A
+										Bullet_X_Motion <= 7 + (2*currentTank) - (y_component / 300);//A
 										//Bullet_Y_Change <= -4;
 										
 									  end

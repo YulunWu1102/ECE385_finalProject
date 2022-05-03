@@ -1,18 +1,22 @@
 
 module  tankB ( input Reset, frame_clk,
 					input [7:0] keycode,
-					input hit,
+					input hit, currentState, control_EN,
+					input [1:0] selfTank, enemyTank,
                output [9:0]  TankX, TankY, TankS,
 					output [1:0] Direction,
 					output shoot,
 					output [9:0] y_component,
-					output [3:0] HP);
-    
+					output [3:0] HP,
+					output		 GG_B);
+    int HP_;
     logic [9:0] Tank_X_Pos, Tank_X_Motion, Tank_Y_Pos, Tank_Y_Motion, Tank_Size;
 	 logic shootFlag, adjustFlag;
+	 logic [7:0] keycode_;
+	 int clock_counter;
 	 //logic [4:0] y_component;
 	 
-    parameter [9:0] Tank_X_Center=500;  // Center position on the X axis
+    parameter [9:0] Tank_X_Center=550;  // Center position on the X axis
     parameter [9:0] Tank_Y_Center=200;  // Center position on the Y axis
     parameter [9:0] Tank_X_Min=0;       // Leftmost point on the X axis
     parameter [9:0] Tank_X_Max=639;     // Rightmost point on the X axis
@@ -22,6 +26,14 @@ module  tankB ( input Reset, frame_clk,
     parameter [9:0] Tank_Y_Step=1;      // Step size on the Y axis
 
     assign Tank_Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	 
+	 
+	 always_comb begin
+		if((control_EN == 1) | (currentState == 0)) keycode_ = keycode;
+		else keycode_ = 0;
+	 end
+   
+	 
    
     always_ff @ (posedge Reset or posedge frame_clk )
     begin: Move_Tank
@@ -34,14 +46,22 @@ module  tankB ( input Reset, frame_clk,
 				shootFlag <= 1'b0;
 				shoot <= 1'b0;
 				y_component <= 9'd0;
-				HP <= 10;
+				HP_ <= 10;
+				GG_B <= 0;
+				clock_counter <= 0;
         end
            
         else 
         begin 
-				 if(hit) HP <= HP-1;
-				 if(HP == 0) begin
-					HP <= 10;
+				clock_counter <= clock_counter + 1;
+				 if(currentState == 0) begin
+					HP_<=10;	
+					GG_B <= 0;
+				 end				   
+				 if(hit) HP_ <= HP_-(5-enemyTank);
+				 if(HP_ <= 0) begin
+					GG_B <= 1'b1;
+					HP_ <= 10;
 				 end
 				 
 				 if ( (Tank_Y_Pos + Tank_Size) >= Tank_Y_Max )  // Ball is at the bottom edge, BOUNCE!
@@ -60,14 +80,14 @@ module  tankB ( input Reset, frame_clk,
 					  //Ball_Y_Motion <= Ball_Y_Motion;  // Ball is somewhere in the middle, don't bounce, just keep moving
 					  
 				 
-				 case (keycode)
+				 case (keycode_)
 					8'h0d : begin
 								adjustFlag <= 1'b1;
 								Direction <= 0;
 								if ( (Tank_X_Pos - Tank_Size) <= Tank_X_Min )  // Ball is at the Left edge, BOUNCE!
 									Tank_X_Motion <= Tank_X_Step;
 								else
-								Tank_X_Motion <= -1;//A
+								Tank_X_Motion <= -(clock_counter % 2);//A
 								Tank_Y_Motion<= 0;
 								
 								
@@ -79,7 +99,7 @@ module  tankB ( input Reset, frame_clk,
 							  if ( (Tank_X_Pos + Tank_Size) >= Tank_X_Max )  // Ball is at the Right edge, BOUNCE!
 									Tank_X_Motion <= (~ (Tank_X_Step) + 1'b1);  // 2's complement.
 							  else
-								  Tank_X_Motion <= 1;//D
+								  Tank_X_Motion <= (clock_counter % 2);//D
 								  Tank_Y_Motion <= 0;
 							  end
 
@@ -161,6 +181,7 @@ module  tankB ( input Reset, frame_clk,
     assign TankY = Tank_Y_Pos;
    
     assign TankS = Tank_Size;
+	 assign HP = HP_;
     
 
 endmodule

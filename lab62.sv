@@ -64,7 +64,9 @@ logic [1:0] currState, currTank;
 logic [9:0] y_component_sig_A, y_component_sig_B;
 logic [1:0] currTank_A, currTank_B;
 logic [3:0] HP_A, HP_B;
-logic 		hit_A, hit_B;
+logic 		hit_A, hit_B, GG_A, GG_B, control_EN;
+logic [3:0] currNum;
+
 //=======================================================
 //  REG/WIRE declarations
 //=======================================================
@@ -177,7 +179,8 @@ logic 		hit_A, hit_B;
 
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 
-
+	timer	tm_0(.frameclk(VGA_VS), .Reset(Reset_h), .currNum(currNum), .control_EN(control_EN));
+	
 
 	state_controller sc(.Reset(Reset_h), .Clk(VGA_VS), .nextStateSig(nextState), .currentState(currState));
 
@@ -201,16 +204,16 @@ logic 		hit_A, hit_B;
 					
 					
 					
-	tankA tA(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), .hit(hit_A),
+	tankA tA(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), .hit(hit_A),.currentState(currState), .control_EN(control_EN), .selfTank(currTank_A), .enemyTank(currTank_B),
 			   .TankX(tankAxsig), .TankY(tankAysig), .TankS(tankAsizesig), 
 				.Direction(dirAsig), .shoot(shootAsig), .y_component(y_component_sig_A),
-				.HP(HP_A));
+				.HP(HP_A), .GG_A(GG_A));
 				
 				
-	tankB tB(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), .hit(hit_B),
+	tankB tB(.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), .hit(hit_B), .currentState(currState),.control_EN(control_EN),  .selfTank(currTank_B), .enemyTank(currTank_A),
 			   .TankX(tankBxsig), .TankY(tankBysig), .TankS(tankAsizesig), 
 				.Direction(dirBsig), .shoot(shootBsig), .y_component(y_component_sig_B),
-				.HP(HP_B));
+				.HP(HP_B), .GG_B(GG_B));
 					
 				
 				
@@ -226,11 +229,11 @@ logic 		hit_A, hit_B;
 													.DrawX(drawxsig),     // horizontal coordinate
 								              .DrawY(drawysig) );   // vertical coordinate
 
-	color_mapper c(.VGA_Clk(VGA_Clk), .Reset(Reset_h),
-						.HP_A(HP_A), .HP_B(HP_B),
+	color_mapper c(.VGA_Clk(VGA_Clk), .Reset(Reset_h), 
+						.HP_A(HP_A), .HP_B(HP_B), .currNum(currNum),
 						.TankX_A(tankAxsig), .TankY_A(tankAysig), .BulletX_A(bulletAxsig), .BulletY_A(bulletAysig), .Direction_A(dirAsig),
 						.TankX_B(tankBxsig), .TankY_B(tankBysig), .BulletX_B(bulletBxsig), .BulletY_B(bulletBysig), .Direction_B(dirBsig),
-						.DrawX(drawxsig), .DrawY(drawysig), .Ball_size(tankAsizesig), .transparent(transig), .hit_A(hit_A), .hit_B(hit_B),
+						.DrawX(drawxsig), .DrawY(drawysig), .Ball_size(tankAsizesig), .transparent(transig), .hit_A(hit_A), .hit_B(hit_B), .GG_A(GG_A), .GG_B(GG_B), .control_EN(control_EN),
 						.currentState(currState), .currentTank_A(currTank_A), .currentTank_B(currTank_B),
 						.blank(blank),
 						.Red(Red), .Green(Green), .Blue(Blue),

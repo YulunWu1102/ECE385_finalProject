@@ -10,12 +10,12 @@
 
 
 module  color_mapper ( input logic			VGA_Clk, Reset,
-							  input 			[3:0] HP_A, HP_B,
+							  input 			[3:0] HP_A, HP_B, currNum,
 							  input        [9:0] TankX_A, TankY_A, BulletX_A, BulletY_A, DrawX, DrawY, Ball_size,
 							  input 			[1:0] Direction_A,
 							  input        [9:0] TankX_B, TankY_B, BulletX_B, BulletY_B, 
 							  input 			[1:0] Direction_B,
-							  input			transparent, blank, hit_A, hit_B,
+							  input			transparent, blank, hit_A, hit_B, GG_A, GG_B, control_EN,
 							  input 			[1:0] currentState, currentTank_A,currentTank_B,
 							  input			[7:0]  vga_port_backgrounddata,
 							  output 		[15:0] vga_port_local_addr,
@@ -23,10 +23,12 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
     
     logic ball_on_A, bullet_on_A, select_on_A, HP_on_A;
 	 logic ball_on_B, bullet_on_B, select_on_B, HP_on_B;
+	 logic num_on;
+	 logic gameover_on;
 	 logic [7:0] currData;
 	 logic [4:0] currBGIdx;
 	 logic [23:0] currBG_RGB;
-	 
+	 logic gameover_flag;
 	 
 	 
 	 //-----------------calculate the background address to feed to OCM-----------------
@@ -76,6 +78,15 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	 assign DistX_B = DrawX - TankX_B;
     assign DistY_B = DrawY - TankY_B;
 	 
+	 //-----------------calculate co-ord to 'GAMEOVER'-----------------
+    int GO_DistX, GO_DistY;
+	 assign GO_DistX = DrawX - 245;
+    assign GO_DistY = DrawY - 100;
+	 
+	 //-----------------calculate co-ord to 'GAMEOVER'-----------------
+    int Num_DistX, Num_DistY;
+	 assign Num_DistX = DrawX - 310;
+    assign Num_DistY = DrawY - 100;
 	 
 	 
 	 
@@ -223,6 +234,23 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	  
 	  
 	  
+	//-----------------palette on Num -----------------
+	logic [12:0] currentNumADDR;
+	assign currentNumADDR = (Num_DistY * 20) + Num_DistX;	
+	logic [3:0] colorIdx_Num;
+	num_rom NR( .addr(currentNumADDR), .currNum(currNum), .data(colorIdx_Num));
+	logic [23:0] color_Num;
+	palette plt_Num(.colorIdx(colorIdx_Num + control_EN), .rgbVal(color_Num));   
+	 
+	  
+	//-----------------palette on GO -----------------
+	logic [12:0] currentGOADDR;
+	assign currentGOADDR = (GO_DistY * 150) + GO_DistX;	
+	logic [7:0] colorIdx_GO;
+	gameover_rom GOR( .addr(currentGOADDR), .data(colorIdx_GO));
+	logic [23:0] color_GO;
+	palette plt_GO(.colorIdx(colorIdx_GO), .rgbVal(color_GO));  
+	
 	  
 	//-----------------palette on HP_A -----------------
 	logic [13:0] currentHPADDR_A;
@@ -310,14 +338,30 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 	
 
 	
-	//-----------------palette on background -----------------
-//	logic [18:0] currentBackgroundADDR;
-//	assign currentBackgroundADDR = (DrawY * 640) + DrawX;	
-//	logic [3:0] colorIdx_background;
-//	//assign colorIdx = 4'h3;
-//	background_rom bgd( .addr(currentBackgroundADDR), .data(colorIdx_background));
-//	logic [23:0] color_background;
-//	palette plt_background_1(.colorIdx(colorIdx_background), .rgbVal(color_background));
+	
+	
+	
+	//-----------------------num Signals-----------------------
+	 
+	always_comb
+    begin:Num_display
+        if ( (Num_DistX <= 20) & (Num_DistY <= 30) & (Num_DistX >= 0) & (Num_DistY >= 0) ) 
+            num_on = 1'b1;
+        else 
+            num_on = 1'b0;
+     end 
+	
+	//-----------------------'GAMEOVER' Signals-----------------------
+	 
+	assign gameover_flag = (GG_A | GG_B) & currentState[0];
+	 always_comb
+    begin:Gameover
+        if ( (GO_DistX <= 150) & (GO_DistY <= 50) & (GO_DistX >= 0) & (GO_DistY >= 0) & (gameover_flag == 1) ) 
+            gameover_on = 1'b1;
+        else 
+            gameover_on = 1'b0;
+     end 
+	
 
 	
 	
@@ -611,7 +655,38 @@ module  color_mapper ( input logic			VGA_Clk, Reset,
 						Green <= color_hp_1[15:8];
 						Blue <= color_hp_1[7:0];
 					end	
+				end  
+				
+				
+				
+				if(num_on)begin
+					if(color_GO == 24'hFF00FF)begin
+						Red <= currBG_RGB[23:16];
+						Green <= currBG_RGB[15:8];
+						Blue <= currBG_RGB[7:0]; 
+					end
+					else begin
+						Red <= color_Num[23:16];
+						Green <= color_Num[15:8];
+						Blue <= color_Num[7:0];
+					end	
 				end
+				
+				
+				if(gameover_on)begin
+					if(color_GO == 24'hFF00FF)begin
+						Red <= currBG_RGB[23:16];
+						Green <= currBG_RGB[15:8];
+						Blue <= currBG_RGB[7:0]; 
+					end
+					else begin
+						Red <= color_GO[23:16];
+						Green <= color_GO[15:8];
+						Blue <= color_GO[7:0];
+					end	
+				end
+				
+				
 				
 				
 				if(blank == 0)begin

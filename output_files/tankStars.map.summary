@@ -1,12 +1,12 @@
-Analysis & Synthesis Status : Successful - Fri Apr 29 20:35:10 2022
+Analysis & Synthesis Status : Successful - Mon May 02 22:50:16 2022
 Quartus Prime Version : 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 Revision Name : tankStars
 Top-level Entity Name : lab62
 Family : MAX 10
-Total logic elements : 23,615
-    Total combinational functions : 22,616
-    Dedicated logic registers : 2,769
-Total registers : 2769
+Total logic elements : 27,614
+    Total combinational functions : 26,617
+    Dedicated logic registers : 2,906
+Total registers : 2906
 Total pins : 141
 Total virtual pins : 0
 Total memory bits : 535,680
