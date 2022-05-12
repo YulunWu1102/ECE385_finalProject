@@ -132,12 +132,12 @@ void setKeycode(WORD keycode)
 int main() {
 
 
-	printf("start main");
+	printf("start ‘’‘’‘main");
 
 
 	printf("start VGA rendering");
 	//VGAColorClr();
-	//VGARender();
+	VGARender();
 
 
 	BYTE rcode;
